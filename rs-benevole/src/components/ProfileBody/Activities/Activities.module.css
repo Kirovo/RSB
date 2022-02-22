@@ -1,0 +1,29 @@
+.body{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+
+.blockinfo{
+    position : absolute;
+    border: black 5px dashed;
+}
+
+
+.cPost {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.contentContainer{
+    height:100%;
+}
+
+
+.content{
+    height:100%;
+}
