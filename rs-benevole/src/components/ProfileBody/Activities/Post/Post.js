@@ -12,7 +12,6 @@ function Post(props) {
         e.preventDefault();
 
         const id_post = e.target.getAttribute('id_post')
-        console.log(id_post)
         await axios.post(`http://localhost:2000/reaction`,
         {
             id_post:id_post

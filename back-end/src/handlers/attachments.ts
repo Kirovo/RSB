@@ -1,22 +1,33 @@
 // Import every module to make a handler from post model
 import express, { Request, Response } from 'express';
-import { Comment, CommentStore } from '../models/comment';
+import { Attachment, AttachmentStore } from '../models/attachment';
 import userAccreditation from '../utilities/userAccreditation';
 import { CRUD } from "../types/CRUDSenarioType";
 import { errorDisplayer } from '../services/errorDisplayer';
 import { CRUDHandlerError } from '../errors/CRUDError';
+import multer from 'multer';
 
 
+const storage = multer.diskStorage({
+	destination: function(_req,_file,cb){
+		cb(null,'./images')
+	},
+	filename: function (_req,file,cb){
+		cb(null, file.originalname)
+	}
+})
+
+const upload = multer({storage:storage});
 
 // Building endpoints
-const commentRoutes = (app: express.Application): void => {
-	app.get('/index-comments', index);
-	app.post('/comment', create);
-	app.delete('/comment', remove)
+const attachmentRoutes = (app: express.Application): void => {
+	app.get('/index-attachments', index);
+	app.post('/attachment', upload.single('file'), userAccreditation, create);
+	app.delete('/attachment', remove)
 };
 
 // Creating a reference to the PostStore class
-const store = new CommentStore();
+const store = new AttachmentStore();
 
 // Creating relation between routes and database
 const index = async (_req: Request, res: Response) => {
@@ -26,10 +37,10 @@ const index = async (_req: Request, res: Response) => {
 		try{
 			store.CRUDSenario.crud = CRUD.Index
 
-			const allActivityComments = await store.index();
+			const allActivityAttachments = await store.index();
 
 			res.status(204);
-			res.json(allActivityComments);
+			res.json(allActivityAttachments);
 		}
 		catch {
 
@@ -49,18 +60,17 @@ const create = async (req: Request, res: Response) => {
 
 		try {
 
-			const comment: Comment = {
+			const attachment: Attachment = {
 				id_post: req.body.id_post,
 				id_profile : res.locals.id, // id_profile from userAccreditation middleware
-				content: req.body.content
 			}
 
 			store.CRUDSenario.crud = CRUD.Create
 
-			const NewComment = await store.create(comment);
+			const NewAttachment = await store.create(attachment);
 
 			res.status(205);
-			res.json(NewComment);
+			res.json(NewAttachment);
 		} 
 		catch{
 
@@ -80,16 +90,16 @@ const remove = async (req: Request, res: Response) => {
 
 		try {
 
-			const comment: Comment = {
-				id: req.query.id_comment as string,
+			const attachment: Attachment = {
+				id: req.query.id_attachment as string,
 				id_post: req.query.id_post as string,
 				id_profile : res.locals.id,
 			}
 
-			const deleteComment = await store.remove(comment)
+			const deleteAttachment = await store.remove(attachment)
 
 			res.status(205);
-			res.json(deleteComment);
+			res.json(deleteAttachment);
 		}
 		catch (err){
 
@@ -104,4 +114,4 @@ const remove = async (req: Request, res: Response) => {
 
 
 // Allowing routes to be called
-export default commentRoutes;
+export default attachmentRoutes;

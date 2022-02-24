@@ -1,5 +1,7 @@
 // Importing client of database to connect to
 import client from '../database';
+import { CRUD } from "../types/CRUDSenarioType";
+
 
 
 export type Reaction = {

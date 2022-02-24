@@ -5,29 +5,31 @@ import { ActivityAction, CRUDSenario } from "../types/CRUDSenarioType";
 
 
 
-export type Comment = {
+export type Attachment = {
 	id?: string | number;
-	id_post?: string | number;
-	id_profile? : string | number;
-	content?: string;
+	id_post?:string | number;
+	id_profile?: string | number;
+	path? : string;
+    filename?: string;
+	mime? : string;
 }
 
 
 // Creating products's class with CRUD and addProducts functions
-export class CommentStore {
+export class AttachmentStore {
 
 	public CRUDSenario: CRUDSenario = {
 		crud: undefined,
-		activityAction: ActivityAction.Comment
+		activityAction: ActivityAction.Attachment
 	}
 
-	async index(): Promise<Comment[]> {
+	async index(): Promise<Attachment[]> {
 
 		try {
 
 			const conn = await client.connect();
 				const sql =
-					'SELECT * FROM comments ORDER BY comments.id DESC;';
+					'SELECT * FROM attachments ORDER BY attachments.id DESC;';
 				const result = await conn.query(sql);
 			conn.release();
 
@@ -39,17 +41,17 @@ export class CommentStore {
 		}
 	}
 
-	async create(c : Comment) : Promise<Comment>{
+	async create(a : Attachment) : Promise<Attachment[]>{
 
 		try {
 
 			const conn = await client.connect();
-				const sql =
-					'INSERT INTO comments (id_post, id_profile, content) VALUES ($1, $2 ,$3) RETURNING *;'
-				const result = await conn.query(sql,[c.id_post,c.id_profile,c.content]);
+				const sql2 =
+					'INSERT INTO attachments (id_post, path, filename, mime) VALUES($1, $2, $3, $4) RETURNING *;'
+				const result = await conn.query(sql2, [a.id_post,a.path,a.filename,a.mime]);
 			conn.release();
 
-			return result.rows[0];
+			return result.rows;
 		} 
 		catch (err) {
 
@@ -57,14 +59,14 @@ export class CommentStore {
 		}
 	}
 
-	async remove(c:Comment) : Promise<Comment[]> {
+	async remove(a:Attachment) : Promise<Attachment[]> {
 
 		try {
 
 			const conn = await client.connect();
 				const sql =
-					'DELETE FROM comments WHERE id=($1) AND id_post=($2) RETURNING*;'
-				const result = await conn.query(sql,[c.id,c.id_post]);
+					'DELETE FROM attachments WHERE id=($1) AND id_profile=($2) RETURNING*;'
+				const result = await conn.query(sql,[a.id,a.id_profile]);
 			conn.release();
 
 			return result.rows
