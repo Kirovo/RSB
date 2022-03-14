@@ -1,0 +1,5 @@
+# RSB
+
+Prerequists:
+  -git
+  -wsl
