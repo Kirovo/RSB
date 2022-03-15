@@ -49,7 +49,7 @@ COPY public.posts (id, id_profile, topic) FROM stdin;
 -- Data for Name: attachments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.attachments (id, id_profile, id_post, fromprofile, frombackground, path, filename, mime) FROM stdin;
+COPY public.attachments (id, id_profile, id_post, path, filename, mime) FROM stdin;
 1	1	1	images\\pexels-photo-9749870.jpeg	pexels-photo-9749870.jpeg	image/jpeg
 2	1	2	images\\photo-1541963463532-d68292c34b19.jfif	photo-1541963463532-d68292c34b19.jfif	image/jpeg
 3	1	3	images\\tree-736885__480.jpg	tree-736885__480.jpg	image/jpeg

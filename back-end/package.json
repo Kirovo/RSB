@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "db-tozero": "db-migrate down -e dev && db-migrate up -e dev",
+    "db-set": "psql -U postgres -d postgres && \\l && db-migrate up -e dev && cat db.sql | psql dev postgres",
     "db-reset": "db-migrate down -e dev && db-migrate up -e dev && cat db.sql | psql dev postgres",
     "db-save": "pg_dump -U postgres -T migrations -a dev > db.sql",
     "build": "npx tsc",

@@ -52,15 +52,9 @@ export class PostStore {
 					'INSERT INTO posts (id_profile, topic) VALUES ($1 ,$2) RETURNING *;'
 				const post = await conn.query(sql, [p.id_profile,p.topic]);
 				const postObj = post.rows[0]
-				const sql2 =
-					'INSERT INTO attachments (id_post, path, filename, mime) VALUES($1, $2, $3, $4) RETURNING *;'
-				const attachment = await conn.query(sql2, [postObj.id,p.path,p.filename,p.mime]);
-				const attaObj = attachment.rows[0];
-				delete attaObj.id_post; // To be able to return a correct Post object
-				delete attaObj.id;      // To be able to return a correct Post object
 			conn.release();
 
-			return {...postObj,...attaObj}
+			return postObj
 		}
 		catch (err) {
 
@@ -71,35 +65,21 @@ export class PostStore {
 	async remove(id: string | number) {
 		try {
 			const conn = await client.connect();
-			const sql1 =
+			let sql =
+			'DELETE FROM reactions WHERE id_post=($1);'
+			await conn.query(sql,[id]);
+			sql =
 			'DELETE FROM attachments WHERE id_post=($1);'
-			const sql2 =
+			await conn.query(sql,[id]);
+				sql =
 			'DELETE FROM comments WHERE id_post=($1);'
-			const sql3 =
+			await conn.query(sql,[id]);
+				sql =
 			'DELETE FROM posts WHERE id=($1);'
-			await conn.query(sql1,[id]);
-			await conn.query(sql2,[id]);
-			await conn.query(sql3,[id]);
+			await conn.query(sql,[id]);
 			conn.release();
 		} catch (err) {
 			throw new Error(`unable delete post: ${err}`);
-		}
-	}
-
-	async fileReader(id: string | number): Promise<Attachment> {
-		
-		try {
-
-			const conn = await client.connect();
-				const sql =
-					'SELECT * FROM attachments WHERE id_post=$1;';
-				const result = await conn.query(sql,[id]);
-			conn.release(result.rows[0]);
-
-			return result.rows[0];
-		}
-		catch (err) {
-			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 }

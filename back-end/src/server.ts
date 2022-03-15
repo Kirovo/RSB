@@ -10,6 +10,7 @@ import postRoutes from './handlers/posts';
 import identificationRoutes from './handlers/identifications';
 import commentRoutes from './handlers/comments';
 import reactionRoutes from './handlers/reactions';
+import attachmentRoutes from './handlers/attachments';
 // import dashboardRoutes from './handlers/dashboards';
 
 // Listenning to the app to endpoints
@@ -22,7 +23,7 @@ app.get('/', function (_req: Request, res: Response) {
 	res.send('Hello World!');
 });
 
-
+attachmentRoutes(app)
 postRoutes(app)
 commentRoutes(app)
 reactionRoutes(app)

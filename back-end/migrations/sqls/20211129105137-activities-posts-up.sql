@@ -31,7 +31,7 @@ CREATE TABLE profiles (
     gendre VARCHAR(63),
     address VARCHAR(255),
     city VARCHAR(63),
-    postalcode VARCHAR(15),
+    postalcode VARCHAR(15)
     -- date
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY, 
     id_profile INT,
     FOREIGN KEY (id_profile) REFERENCES profiles(id),
-    topic VARCHAR(2500),
+    topic VARCHAR(2500)
     -- date
 );
 
@@ -51,8 +51,6 @@ CREATE TABLE attachments (
     id_post INT,
     FOREIGN KEY(id_profile) REFERENCES profiles(id),
     FOREIGN KEY(id_post) REFERENCES posts(id),
-    fromprofile BOOLEAN,
-    frombackground BOOLEAN,
     path VARCHAR(255),
     filename VARCHAR(127),
     mime VARCHAR(15)
@@ -74,10 +72,9 @@ CREATE TABLE comments (
 CREATE TABLE reactions (
     id SERIAL PRIMARY KEY,
     id_post INT,
-    id_profile INT
+    id_profile INT,
     FOREIGN KEY(id_profile) REFERENCES profiles(id),
-    FOREIGN KEY(id_post) REFERENCES posts(id),
-
+    FOREIGN KEY(id_post) REFERENCES posts(id)
     -- date
 );
 

@@ -6,6 +6,8 @@ import { CRUD } from "../types/CRUDSenarioType";
 import { errorDisplayer } from '../services/errorDisplayer';
 import { CRUDHandlerError } from '../errors/CRUDError';
 import multer from 'multer';
+import path from 'path';
+import {promises as fsPromises} from 'fs'
 
 
 const storage = multer.diskStorage({
@@ -23,7 +25,9 @@ const upload = multer({storage:storage});
 const attachmentRoutes = (app: express.Application): void => {
 	app.get('/index-attachments', index);
 	app.post('/attachment', upload.single('file'), userAccreditation, create);
-	app.delete('/attachment', remove)
+	app.delete('/attachment', remove);
+	app.get('/attachment/:id', fileReader)
+
 };
 
 // Creating a reference to the PostStore class
@@ -39,7 +43,7 @@ const index = async (_req: Request, res: Response) => {
 
 			const allActivityAttachments = await store.index();
 
-			res.status(204);
+			res.status(200);
 			res.json(allActivityAttachments);
 		}
 		catch {
@@ -62,7 +66,10 @@ const create = async (req: Request, res: Response) => {
 
 			const attachment: Attachment = {
 				id_post: req.body.id_post,
-				id_profile : res.locals.id, // id_profile from userAccreditation middleware
+				id_profile: res.locals.id, // id_profile from userAccreditation middleware
+				path: req.file?.path, 
+				filename: req.file?.filename,
+				mime: req.file?.mimetype,
 			}
 
 			store.CRUDSenario.crud = CRUD.Create
@@ -111,6 +118,20 @@ const remove = async (req: Request, res: Response) => {
 		errorDisplayer(err,res)
 	}
 }
+
+const fileReader = async (req: Request, res: Response) => {
+	try{
+		const attachment = await store.fileReader(req.params.id);
+		if (attachment) {
+			const field = path.normalize('D:/ProjetsDéveloppementsWeb/RSB/back-end/'+ attachment.path)
+			await fsPromises.readFile(field)
+			res.sendFile(field)
+		}
+	}
+	catch (err){ 
+		throw new Error('unable to read the file :' + err)
+	}
+};
 
 
 // Allowing routes to be called

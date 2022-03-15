@@ -11,30 +11,21 @@ const {
 	POSTGRES_DB,
 	POSTGRES_USER,
 	POSTGRES_PASSWORD,
-	POSTGRES_TEST_DB,
-	ENV
+	ENV_DB
 } = process.env;
 
 
 // Initializing port as number from environment variables
 const POST_PORT = process.env.POST_PORT as unknown as number;
 
+
 // Creatting a client
 let client = new Pool();
 
 // Giving the client appropriate database to work with
 // depending on of working environement (dev,test)
-if (ENV === 'test') {
-	client = new Pool({
-		host: POSTGRES_HOST,
-		database: POSTGRES_TEST_DB,
-		port: POST_PORT,
-		user: POSTGRES_USER,
-		password: POSTGRES_PASSWORD,
-	});
-}
 
-if (ENV === 'dev') {
+if (ENV_DB === 'dev') {
 	client = new Pool({
 		host: POSTGRES_HOST,
 		database: POSTGRES_DB,

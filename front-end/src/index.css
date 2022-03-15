@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+div {
+  border : 3px black solid;
+  border-radius: 15px;
+  background-color:rgb(231, 244, 255);
+  
+}
+
+
+img.post {
+  border-radius: 15px;
+  margin: 20px;
+}
+
+button {
+  border-radius: 15px;
+  background-color:rgb(88, 88, 165);
+  color: rgb(231, 244, 255);
+  padding: 0px 10px;
+  white-space: nowrap;
+  padding:0px;
+}
+
+.close-button {
+  text-decoration: none;
+  background-color:rgba(255, 255, 255, 0);
+  width: 50px;
+  font-size: 30px;
+  font-weight: 100;
+  line-height: 0em;
+  padding: 310;
+  color: rgb(155, 155, 155);
+  border: none;
+  text-decoration: none;
+  border-radius: 50%;
+  display: inline-block;
+} 
+
+
+.close-button:hover {
+  color: black;
+}
+
+.close-button:focus {outline:0;}
+
+div.sender-profile{
+  width: 100%;
+  background-color: rgb(88, 88, 165);
+}
+
+div.sender-header{
+  display: flex;
+  height: 50px;
+}
+
+input {
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+* {
+  padding: 2px;
+
+}

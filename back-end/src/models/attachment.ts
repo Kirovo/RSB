@@ -76,4 +76,20 @@ export class AttachmentStore {
 			throw new CRUDModelError(this.CRUDSenario)
 		}
 	}
+	async fileReader(id: string | number): Promise<Attachment> {
+		
+		try {
+
+			const conn = await client.connect();
+				const sql =
+					'SELECT * FROM attachments WHERE id_post=$1;';
+				const result = await conn.query(sql,[id]);
+			conn.release(result.rows[0]);
+
+			return result.rows[0];
+		}
+		catch (err) {
+			throw new Error(`unable get posts: ${err}`);
+		}
+	}
 }

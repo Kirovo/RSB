@@ -28,7 +28,7 @@ const index = async (_req: Request, res: Response) => {
 
 			const allActivityComments = await store.index();
 
-			res.status(204);
+			res.status(200);
 			res.json(allActivityComments);
 		}
 		catch {
