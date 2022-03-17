@@ -71,7 +71,7 @@
     width: 100%;
     height: 300px;
     object-fit:cover;
-    border-radius: 15px;
+    
 }
 
 .cover2 {
@@ -97,4 +97,8 @@
     border-radius: 50%;
 
 
+}
+
+.checkbox {
+    border-radius: 50%;
 }

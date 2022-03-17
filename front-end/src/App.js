@@ -54,7 +54,6 @@ function App() {
             <Router>
               {modal ? (<Modal />) : (<></>)}
                 <div className="App">
-                  <Header />
                   <Routes>
                     <Route exact path='/' 
                       element={
@@ -64,7 +63,7 @@ function App() {
                         auth ? (<Navigate push to="/home" />) : (<Register />)} />
                     <Route path='/home' 
                       element={
-                        auth ? (<><Menu /><ProfileBody /></>):(<Navigate push to="/" />)} />
+                        auth ? (<><Header /><Menu /><ProfileBody /></>):(<Navigate push to="/" />)} />
                   </Routes>
                 </div>
             </Router>
