@@ -1,9 +1,7 @@
-/* .body{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-} */
+.body{
+    background-color: aliceblue;
+    height: 400px;
+}
 
 
 .blockinfo{

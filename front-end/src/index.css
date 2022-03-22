@@ -6,22 +6,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #00A896;
   background: none;
-  margin: 0;
-  padding: 0;
-  height:100vh;
-  width: 100vw;
+
 }
 
 #root {
-  height: 100%;
-  width: 100%;
   background: none;
   border: none;
-  height:100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-
+  contain: content;
 }
 
 code {
@@ -32,8 +23,6 @@ code {
 
 div {
   border : 1px gray solid;
-  background: none;
-  box-shadow: 1px 1px;
 }
 
 
@@ -93,6 +82,8 @@ input {
   margin-bottom: 15px;
   border: none;
   text-align: center;
+  width: 300px;
+
 }
 
 

@@ -1,14 +1,11 @@
 .App {
-  display: flex;
   flex-direction: column;
-  text-align: center;
-  height:100%;
-  margin: 0 auto;
   text-align: center;
   contain: content;
   position: relative;
   background: none;
   border:none;
+  height: 100vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {

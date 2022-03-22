@@ -48,10 +48,7 @@
     z-index: -1;
 }
 
-input {
-    width: 300px;
 
-}
 
 .title-p2 {
     font-size: 50px;
@@ -63,7 +60,7 @@ input {
     position: absolute;
     left:0;
     right:0;
-    height: 120%;
+    height: 125%;
     top: 90vh;
     width: 90%;
     margin-left: auto; 
@@ -118,11 +115,40 @@ input {
     justify-content:space-around;
     align-items: center;
     margin-top: 50px;
+    position: relative;
     
 }
 
-p {
-    width: 50%;
-    color: aliceblue;
-    font-size: large;
+
+
+.templates-holder{
+    display: flex;
+    justify-content: center;
+}
+
+.templates-holder > div {
+    width: 350px;
+    height: 500px;
+    border-radius: 30px;
+}
+
+.template-1 {
+    transform: rotate(-30deg) translateY(60px);
+    background-color: aquamarine;
+    z-index: 1;
+
+}
+
+
+.template-2 {
+    background-color:antiquewhite;
+    z-index: 2;
+
+}
+
+
+.template-3 {
+    background-color:blueviolet;
+    transform: rotate(30deg) translateY(60px);
+    z-index: 3;
 }

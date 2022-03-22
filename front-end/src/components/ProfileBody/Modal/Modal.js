@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import styles from './Modal.module.css'
+import './Modal.css'
 import axios from 'axios';
-import TokenContext from '../../contexts/tokenContext';
-import ModalContext from '../../contexts/modalContext';
-import RefreshContext from '../../contexts/refreshContext';
+import TokenContext from '../../../contexts/tokenContext';
+import ModalContext from '../../../contexts/modalContext';
+import RefreshContext from '../../../contexts/refreshContext';
 
 function Modal(){
 
@@ -72,9 +72,9 @@ function Modal(){
             case 'createPost':
 
                 return(
-                        <div tabIndex='0' onKeyDown={onKeyDownHandler} className={styles.modalContainer} >
-                        <div onClick={ctxmo.closeModal} className={styles.modal}></div>
-                            <div className={styles.modalContent}>
+                        <div tabIndex='0' onKeyDown={onKeyDownHandler} className='modalContainer' >
+                        <div onClick={ctxmo.closeModal} className="modal1"></div>
+                            <div className="modalContent">
                                 <div className='sender-header'>
                                     <div className='sender-profile'></div>
                                     <button onClick={ctxmo.closeModal} className='close-button' type="button">&#x2715;</button>

@@ -49,19 +49,16 @@ function Activities() {
             <div className={styles.cPost}>
                 <button onClick={ctxmo.createPostModal} type="button">New Post</button>
             </div>
-            <div className={styles.contentContainer}>
-                {posts ? (
-                    <div className={styles.content}>    
-                        {posts.map((post, index) => (
-                            <Post key={index} token={ctxto.token} post={post} comments={comments} deletePost={()=>deletePost(post.id)} reactions={reactions}/>
-                            ))}
-                    </div>
-                ):(
-                    <div>No posts</div>
-                    
-                )}
-            </div>
-
+            {posts ? (
+                <>    
+                    {posts.map((post, index) => (
+                        <Post key={index} token={ctxto.token} post={post} comments={comments} deletePost={()=>deletePost(post.id)} reactions={reactions}/>
+                        ))}
+                </>
+            ):(
+                <>No posts</>
+                
+            )}
         </div>
     )
 }

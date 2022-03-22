@@ -91,6 +91,12 @@ class Login extends React.Component {
                                             Rem quae architecto ad nobis sint quia ratione. Qui deserunt atque in alias natus sed incidunt unde aut perspiciatis voluptates et molestiae temporibus et sint autem!
                                         </p>
                                     </div>
+                                        <div className='templates-holder'>
+                                            <div className='template-1'></div>
+                                            <div className='template-2'></div>
+                                            <div className='template-3'></div>
+                                        </div>
+
                                 </div>
                             </div>
                         )}

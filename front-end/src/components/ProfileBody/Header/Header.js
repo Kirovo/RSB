@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import AuthContext from '../../contexts/authContext';
+import AuthContext from '../../../contexts/authContext';
+import Menu from './Menu/Menu';
 import styles from './Header.module.css'
 
 function Header() {
@@ -10,6 +11,7 @@ function Header() {
         <div className={styles.hh}>
             Header
             <a href="http://localhost:3000/" style={ctxau.auth ? ({display : 'inline'}) : ({display : 'none'})} onClick={ctxau.logout}>Logout</a>
+            <Menu />
         </div>
     )
 }
