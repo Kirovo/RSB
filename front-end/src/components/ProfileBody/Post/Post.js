@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import styles from './Post.module.css'
+import './Post.css'
 import axios from 'axios'
-import RefreshContext from '../../../../contexts/refreshContext';
+import RefreshContext from '../../../contexts/refreshContext';
 
 function Post(props) {
 
@@ -64,52 +64,54 @@ function Post(props) {
 
 
     return (
-        <div className={styles.post} key={props.post.id}>
+        <div className='border-radius border-shadow post' key={props.post.id}>
             <div className='sender-header'>
                 <div className='sender-profile'></div>
                 <button className='close-button' onClick={deletePost}>&#x2715;</button>
             </div>
-            <p>{props.post.topic}</p>
+            <h2 className='topic'>{props.post.topic}</h2>
             <img className='post' src={'http://localhost:2000/attachment/'+ props.post.id} alt={props.post.path}/>
             {/* To resetup on back-end & refactor to consider all doc types see ref i navigator favorites*/}
-                <div>
-                    <button id_post={props.post.id} onClick={reacting}>ReactionTBD</button>
+                <div className='reaction'>
+                    <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>
+                    <div className='reaction-number-box'>
                     {(props.reactions) ? (
-                        <label>{props.reactions.filter(reaction => reaction.id_post === props.post.id).length}</label>
+
+                        
+                            <label>&#128077; {props.reactions.filter(reaction => reaction.id_post === props.post.id).length}</label>
+                        
                     ):(
                         <></>
                     )}
+
+                    </div>
                 </div>
             <div>
 
 
-                <div>
-                    {(props.comments) ? (
-                        (props.comments.filter(comment => comment.id_post === props.post.id).length !== 0)  ? (
-                        
-                            <div>
-                                {props.comments.filter(comment => comment.id_post === props.post.id).map(comment => (
-                                    <div key={comment.id}>
-                                        <div className='sender-header'>
-                                            <div className='sender-profile'></div>
-                                            <button className='close-button' id_post={comment.id_post} id_comment={comment.id} onClick={deleteCom} type="button">&#x2715;</button>
-                                        </div>
-                                        <div>{comment.content}</div>
-                                    </div>
-                                ))}                      
-                            </div>
-                        ):(
-                            <div>Be the first to give a comment on this post !</div>
-                            )
-        	        ):(<div>Be the first to give a comment on this post !</div>)
-                    }
-                     
-                </div>
-                <form id_post={props.post.id} onSubmit={commenting}>
-                    <label>Comment</label>
-                    <input value={comment} onChange={e => setComment(e.target.value)}></input>
-                    <button>Send</button>
-                </form>
+            <div >
+                {(props.comments) ? (
+                    (props.comments.filter(comment => comment.id_post === props.post.id).length !== 0)  ? (
+                    
+                        <div>
+                            {props.comments.filter(comment => comment.id_post === props.post.id).map(comment => (
+                                <div className='comments' key={comment.id}>
+                                    <div>{comment.content}</div>
+                                    <button className='close-button' id_post={comment.id_post} id_comment={comment.id} onClick={deleteCom} type="button">&#x2715;</button>
+                                </div>
+                            ))}                      
+                        </div>
+                    ):(
+                        <></>
+                        )
+                ):(<></>)
+                }
+                    
+            </div>
+            <form className='create-comment' id_post={props.post.id} onSubmit={commenting}>
+                <input value={comment} onChange={e => setComment(e.target.value)} placeholder='Comment'></input>
+                <button>Send</button>
+            </form>
             </div>
         </div>
     )

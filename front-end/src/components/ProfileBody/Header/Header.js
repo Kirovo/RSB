@@ -9,8 +9,10 @@ function Header() {
 
     return (
         <div className={styles.hh}>
+            <div className={styles.header1}>
             Header
             <a href="http://localhost:3000/" style={ctxau.auth ? ({display : 'inline'}) : ({display : 'none'})} onClick={ctxau.logout}>Logout</a>
+            </div>
             <Menu />
         </div>
     )

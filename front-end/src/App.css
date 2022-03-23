@@ -6,6 +6,7 @@
   background: none;
   border:none;
   height: 100vh;
+  display: flex;
 }
 
 @media (prefers-reduced-motion: no-preference) {

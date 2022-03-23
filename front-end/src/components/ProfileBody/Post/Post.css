@@ -1,0 +1,79 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aliceblue;
+    margin-top: 10px;
+}
+
+.topic {
+    
+    background-color: white;
+    padding: 20px 0;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+}
+.reaction {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    width: 100%;
+    background-color: black;
+
+}
+
+.reaction-number-box  {
+    color: white;
+    width: 50px;
+}
+
+
+.comments {
+    background-color: white;
+    border: 5px black;
+    display: flex;
+    flex-direction: row;
+    align-items: center ;
+    justify-content: space-between;
+    padding: 20px 20px;
+}
+
+.create-comment {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.create-comment > input {
+    width: 100%;
+    margin: 0;
+    line-height: 0;
+    border-radius: 0 0 0 26px;
+    height: 50px;
+}
+
+.create-comment > input {
+    width: 100%;
+    margin: 0;
+    line-height: 0;
+    border-radius: 0 0 0 26px;
+    height: 50px;
+    background-color: rgb(218, 218, 218);
+
+}
+
+input:focus {
+    background-color: white;
+    outline: none;
+
+}
+
+
+
+.create-comment > button {
+    height: 50px;
+    border-radius: 0 0 26px 0;
+}
+
+

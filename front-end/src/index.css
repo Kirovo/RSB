@@ -12,7 +12,6 @@ body {
 #root {
   background: none;
   border: none;
-  contain: content;
 }
 
 code {
@@ -21,24 +20,15 @@ code {
 }
 
 
-div {
-  border : 1px gray solid;
-}
-
-
-img.post {
-  
-  margin: 20px;
-}
-
 
 button {
-  border-radius: 15px;
-  background-color: rgb(32, 32, 32);
+  background-color: black;
   color: rgb(231, 244, 255);
-  padding: 0px 10px;
+  padding: 10px 10px;
   white-space: nowrap;
+  border: none;
 }
+
 
 
 .close-button {
@@ -58,7 +48,7 @@ button {
 
 
 .close-button:hover {
-  color: black;
+  color: white;
 }
 
 
@@ -67,12 +57,14 @@ button {
 
 div.sender-profile {
   width: 100%;
-  background-color: black;
 }
 
 
 div.sender-header {
   display: flex;
+  background-color: black;
+  border-radius: 27px 27px 0 0;
+
   height: 50px;
 }
 
@@ -103,4 +95,29 @@ h1 {
   line-height:40px;
   display: inline-block;
 
+}
+
+.border-radius {
+  border-radius: 25px;
+}
+
+.border-shadow {
+  box-shadow: 1px 5px 10px;
+
+}
+
+::-webkit-scrollbar-track 
+{
+  display: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }

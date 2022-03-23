@@ -31,7 +31,6 @@
 }
 
 .rememberCheckbox {
-    border: none;
     background: none;
     box-shadow: none;
     display: flex;
@@ -77,7 +76,6 @@
     scroll-snap-type: y mandatory;
     scroll-snap-align:center;
     height: 100%;
-    border: none;
     display:flex;
     flex-flow: column nowrap;
     background: none;
