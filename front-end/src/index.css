@@ -4,21 +4,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #00A896;
-  background: none;
-
 }
 
 #root {
-  background: none;
-  border: none;
+
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
 
 
 button {
@@ -48,7 +44,7 @@ button {
 
 
 .close-button:hover {
-  color: white;
+  color: rgb(201, 207, 212);
 }
 
 
@@ -64,9 +60,10 @@ div.sender-header {
   display: flex;
   background-color: black;
   border-radius: 27px 27px 0 0;
-
   height: 50px;
 }
+
+
 
 
 input {
@@ -78,10 +75,9 @@ input {
 
 }
 
-
-
 * {
   font-family: 'Rubik', sans-serif;
+
 }
 
 h1 {

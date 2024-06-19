@@ -75,11 +75,15 @@ function Post(props) {
                 <div className='reaction'>
                     <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>
                     <div className='reaction-number-box'>
-                    {(props.reactions) ? (
+                    {props.reactions ? (
+                        (props.reactions.filter(reaction => reaction.id_post === props.post.id).length !== 0) ? (
 
                         
                             <label>&#128077; {props.reactions.filter(reaction => reaction.id_post === props.post.id).length}</label>
                         
+                    ):(
+                        <></>
+                    )
                     ):(
                         <></>
                     )}
@@ -90,7 +94,7 @@ function Post(props) {
 
 
             <div >
-                {(props.comments) ? (
+                {props.comments ? (
                     (props.comments.filter(comment => comment.id_post === props.post.id).length !== 0)  ? (
                     
                         <div>

@@ -71,14 +71,13 @@ class Login extends React.Component {
                                             <input className="form-check-input" type='checkbox' checked={this.state.keepLogged} onChange={(e)=> this.setState({keepLogged : e.target.checked})}></input>
                                             <label className="form-check-label">Remember me</label>
                                         </div>
-                                            <button onClick={()=>this.logging(objto,objau)}>Next</button>
+                                        <button onClick={()=>this.logging(objto,objau)}>Next</button>
                                         <nav>
-                                        <Link to='/' >Forgot password ?</Link>
-                                        <Link to='/register'>Register now !</Link>
+                                            <Link to='/' >Forgot password ?</Link>
+                                            <Link to='/register'>Register now !</Link>
                                         </nav>
                                     </div>
                                 </div>
-                                <div className='snapper'></div>
                                 <div className='site-description'>
                                     <p className='copyright'>Copyright &#169; : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     <div className='details'>
@@ -91,11 +90,11 @@ class Login extends React.Component {
                                             Rem quae architecto ad nobis sint quia ratione. Qui deserunt atque in alias natus sed incidunt unde aut perspiciatis voluptates et molestiae temporibus et sint autem!
                                         </p>
                                     </div>
-                                        <div className='templates-holder'>
-                                            <div className='template-1'></div>
-                                            <div className='template-2'></div>
-                                            <div className='template-3'></div>
-                                        </div>
+                                    <div className='templates-holder'>
+                                        <div className='template-1'></div>
+                                        <div className='template-2'></div>
+                                        <div className='template-3'></div>
+                                    </div>
 
                                 </div>
                             </div>

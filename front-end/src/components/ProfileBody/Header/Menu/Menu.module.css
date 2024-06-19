@@ -1,6 +1,19 @@
 .header {
     display: flex;
-    justify-content: center;
-    justify-content: space-around;
-    height: 50%;
+    justify-content:center;
+    background-color: aliceblue;
+    list-style-type:none;
+    
+}
+
+.header div {
+    text-decoration: none;
+    padding: 0 50px;
+    border-bottom:3px solid aliceblue;
+}
+
+.header div:hover {
+    color: blue;
+    border-bottom:3px solid blue;
+    cursor: pointer;
 }

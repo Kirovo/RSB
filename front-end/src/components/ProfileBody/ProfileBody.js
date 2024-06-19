@@ -11,6 +11,7 @@ import TokenContext from '../../contexts/tokenContext';
 import ModalContext from '../../contexts/modalContext';
 import RefreshContext from '../../contexts/refreshContext';
 import { Index, Delete } from '../../api/activity';
+import WorkInProgress from '../../common/WorkInProgress/WorkInProgress';
 
 
 
@@ -66,7 +67,10 @@ function ProfileBody(props) {
                 <div className="center" id="scrollbar1">
                     <ProfileInfo />
                     <div className='cPost border-radius border-shadow'>
-                        <button onClick={()=>{setModal('createPost')}} type="button">New Post</button>
+                        <div className='newpost-container'>
+                            <button className='newpost-button' onClick={()=>{setModal('createPost')}} type="button">New Post</button>
+                        </div>
+                        <WorkInProgress />
                     </div>
                     {posts ? (
                             posts.map((post, index) => (

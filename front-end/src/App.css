@@ -1,12 +1,7 @@
 .App {
-  flex-direction: column;
+  overflow: hidden;
   text-align: center;
-  contain: content;
-  position: relative;
-  background: none;
-  border:none;
   height: 100vh;
-  display: flex;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,12 +1,13 @@
 import React from 'react';
-import Post from './Post/Post';
 import styles from './MissionsQuicky.module.css'
+import WorkInProgress from '../../../common/WorkInProgress/WorkInProgress';
 
 function MissionsQuicky() {
     return (
         <div className={styles.body}>
+
             <div className={styles.blockinfo}>MissionsQuicky</div>
-            <Post />
+            <WorkInProgress/>
         </div>
     )
 }

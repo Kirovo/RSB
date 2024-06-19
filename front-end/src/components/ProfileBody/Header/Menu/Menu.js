@@ -4,12 +4,12 @@ import styles from './Menu.module.css'
 function Menu() {
     return (
         
-            <ul className = {styles.header}>
-                <li>Home</li>
-                <li>Missons</li>
-                <li>Events</li>
-                <li>Your Page</li>
-            </ul>
+            <div className = {styles.header}>
+                <div>Home</div>
+                <div>Missons</div>
+                <div>Events</div>
+                <div>Your Page</div>
+            </div>
 
     )
 }

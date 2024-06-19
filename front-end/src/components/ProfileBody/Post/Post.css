@@ -31,7 +31,7 @@
 
 .comments {
     background-color: white;
-    border: 5px black;
+    border: 1px solid rgb(231, 231, 231);
     display: flex;
     flex-direction: row;
     align-items: center ;
