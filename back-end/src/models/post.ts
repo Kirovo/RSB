@@ -16,7 +16,6 @@ export type Post = {
 };
 
 
-// Creating products's class with CRUD and addProducts functions
 export class PostStore {
 
 	public CRUDSenario: CRUDSenario = {
@@ -31,7 +30,6 @@ export class PostStore {
 			const conn = await client.connect();
 				const sql =
 					'SELECT * FROM posts ORDER BY posts.id DESC;';
-					// Change to ORDER BY date
 				const result = await conn.query(sql);
 			conn.release();
 

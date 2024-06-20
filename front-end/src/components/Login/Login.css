@@ -85,7 +85,7 @@
     opacity: 1;
 }
 
-.copyright {
+.copyright, .paragraphe {
     text-align: center;
     padding: 30px 40px 0 40px;
     font-size: x-small;

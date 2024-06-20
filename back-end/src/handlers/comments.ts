@@ -23,7 +23,7 @@ const index = async (_req: Request, res: Response) => {
 
 	try {
 
-		try{
+		try {
 			store.CRUDSenario.crud = CRUD.Index
 
 			const allActivityComments = await store.index();
@@ -38,7 +38,7 @@ const index = async (_req: Request, res: Response) => {
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 };
 
@@ -51,7 +51,7 @@ const create = async (req: Request, res: Response) => {
 
 			const comment: Comment = {
 				id_post: req.body.id_post,
-				id_profile : res.locals.id, // id_profile from userAccreditation middleware
+				id_profile: res.locals.id, // id_profile from userAccreditation middleware
 				content: req.body.content
 			}
 
@@ -61,15 +61,15 @@ const create = async (req: Request, res: Response) => {
 
 			res.status(205);
 			res.json(NewComment);
-		} 
-		catch{
+		}
+		catch {
 
 			throw new CRUDHandlerError(store.CRUDSenario)
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 };
 
@@ -83,7 +83,7 @@ const remove = async (req: Request, res: Response) => {
 			const comment: Comment = {
 				id: req.query.id_comment as string,
 				id_post: req.query.id_post as string,
-				id_profile : res.locals.id,
+				id_profile: res.locals.id,
 			}
 
 			const deleteComment = await store.remove(comment)
@@ -91,14 +91,14 @@ const remove = async (req: Request, res: Response) => {
 			res.status(205);
 			res.json(deleteComment);
 		}
-		catch (err){
+		catch (err) {
 
 			throw new CRUDHandlerError(store.CRUDSenario)
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 }
 

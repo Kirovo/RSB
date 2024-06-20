@@ -9,7 +9,7 @@ import { CRUD } from "../types/CRUDSenarioType";
 // Building endpoints
 const postRoutes = (app: express.Application): void => {
 	app.get('/index-posts', index);
-	app.post('/post',  userAccreditation, create);
+	app.post('/post', create);
 	app.delete('/post/:id', remove)
 };
 
@@ -18,11 +18,11 @@ const store = new PostStore();
 
 // Creating relation between routes and database
 const index = async (_req: Request, res: Response) => {
-	try{
+	try {
 		const posts = await store.index();
 		res.json(posts);
-		}
-	catch(err) {
+	}
+	catch (err) {
 		throw err;
 	}
 };
@@ -35,9 +35,10 @@ const create = async (req: Request, res: Response) => {
 		const post: Post = {
 			id_profile: res.locals.id,
 			topic: req.body.topic,
-		} 
+		}
 
 		const newPost = await store.create(post);
+		console.log(newPost)
 		res.status(200);
 		res.json(newPost);
 
@@ -59,7 +60,7 @@ const remove = async (req: Request, res: Response) => {
 		res.status(205);
 		res.json('deleted');
 	}
-	catch (err){
+	catch (err) {
 		res.status(400);
 		res.json(err as string);
 		return;

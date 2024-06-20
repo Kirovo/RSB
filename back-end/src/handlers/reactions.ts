@@ -10,7 +10,7 @@ import { CRUD } from "../types/CRUDSenarioType";
 // Building endpoints
 const reactionRoutes = (app: express.Application): void => {
 	app.get('/index-reactions', index);
-	app.post('/reaction', userAccreditation ,create);
+	app.post('/reaction', userAccreditation, create);
 };
 
 // Creating a reference to the PostStore class
@@ -18,11 +18,11 @@ const store = new ReactionStore();
 
 // Creating relation between routes and database
 const index = async (_req: Request, res: Response) => {
-	try{
+	try {
 		const reactions = await store.index();
 		res.json(reactions);
 	}
-	catch(err) {
+	catch (err) {
 		throw new Error(`unable to index reactions: ${err}`)
 	}
 };
@@ -32,14 +32,14 @@ const create = async (req: Request, res: Response) => {
 	try {
 		const reaction: Reaction = {
 			id_post: req.body.id_post,
-			id_profile : res.locals.id // id_profile from userAccreditation middleware
+			id_profile: res.locals.id // id_profile from userAccreditation middleware
 		}
 
 		const reactions = await store.create(reaction);
 		res.json(reactions);
 
-	} 
-	catch(err){
+	}
+	catch (err) {
 		throw new Error(`unable to create reaction: ${err}`)
 	}
 };
