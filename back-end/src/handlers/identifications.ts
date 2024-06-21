@@ -11,8 +11,11 @@ const upload = multer();
 
 // Building endpoints
 const identificationRoutes = (app: express.Application): void => {
-	app.post('/register', upload.none(),create);
-    app.get('/login', upload.none(),authenticate)
+	app.post('/register', upload.none(), create);
+	app.get('/login', upload.none(), authenticate);
+	app.get('/users', index); // New route for listing all users
+	app.get('/user/:id', show); // New route for fetching a single user by ID
+	app.delete('/user/:id', remove); // New route for deleting a user by ID
 };
 
 // Creating a reference to the PostStore class
@@ -51,6 +54,38 @@ const authenticate = async (req: Request, res: Response) => { // GET /login
         res.json(err)
         return
     }
+};
+
+// Handler for listing all users
+const index = async (req: Request, res: Response) => {
+	try {
+		const users = await store.index();
+		res.json(users);
+	} catch (err) {
+		res.status(500).json({ error: err });
+	}
+};
+
+// Handler for fetching a single user by ID
+const show = async (req: Request, res: Response) => {
+	try {
+		const userId = req.params.id;
+		const user = await store.show(userId);
+		res.json(user);
+	} catch (err) {
+		res.status(404).json({ error: 'User not found' });
+	}
+};
+
+// Handler for deleting a user by ID
+const remove = async (req: Request, res: Response) => {
+	try {
+		const userId = req.params.id;
+		const deleted = await store.remove(userId);
+		res.status(200).json(deleted);
+	} catch (err) {
+		res.status(500).json({ error: 'Failed to delete user' });
+	}
 };
 
 

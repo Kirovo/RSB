@@ -11,11 +11,12 @@ import { CRUDHandlerError } from '../errors/CRUDError';
 // Building endpoints
 const commentRoutes = (app: express.Application): void => {
 	app.get('/index-comments', index);
+	app.get('/comment/:id', show); // New route for fetching a single comment
 	app.post('/comment', create);
 	app.delete('/comment', remove)
 };
 
-// Creating a reference to the PostStore class
+// Creating a reference to the CommentStore class
 const store = new CommentStore();
 
 // Creating relation between routes and database
@@ -41,6 +42,21 @@ const index = async (_req: Request, res: Response) => {
 		errorDisplayer(err, res)
 	}
 };
+
+// Handler for fetching a single comment by ID
+const show = async (req: Request, res: Response) => {
+	try {
+		const commentId = req.params.id; // Get the ID from the route parameter
+		store.CRUDSenario.crud = CRUD.Show; // Set CRUD scenario to Read
+
+		const comment = await store.show(commentId); // Assuming there's a show method in CommentStore
+
+		res.status(200);
+		res.json(comment);
+	} catch (err) {
+		errorDisplayer(err, res);
+	}
+}
 
 
 const create = async (req: Request, res: Response) => {
@@ -101,6 +117,8 @@ const remove = async (req: Request, res: Response) => {
 		errorDisplayer(err, res)
 	}
 }
+
+
 
 
 // Allowing routes to be called

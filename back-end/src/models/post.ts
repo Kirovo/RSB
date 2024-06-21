@@ -80,4 +80,22 @@ export class PostStore {
 			throw new Error(`unable delete post: ${err}`);
 		}
 	}
+
+    // Method to fetch a single post by ID
+    async show(id: string | number): Promise<Post | null> {
+        try {
+            const sql = 'SELECT * FROM posts WHERE id=($1)';
+            const conn = await client.connect();
+            const result = await conn.query(sql, [id]);
+            conn.release();
+
+            if (result.rows.length) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
+        } catch (err) {
+            throw new Error(`Could not find post ${id}. Error: ${err}`);
+        }
+    }
 }

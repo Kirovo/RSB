@@ -74,4 +74,22 @@ export class CommentStore {
 			throw new CRUDModelError(this.CRUDSenario)
 		}
 	}
+
+	// Method to fetch a single comment by ID
+	async show(id: string | number): Promise<Comment | null> {
+		try {
+			const sql = 'SELECT * FROM comments WHERE id=($1)';
+			const conn = await client.connect();
+			const result = await conn.query(sql, [id]);
+			conn.release();
+
+			if (result.rows.length) {
+				return result.rows[0];
+			} else {
+				return null;
+			}
+		} catch (err) {
+			throw new Error(`Could not find comment ${id}. Error: ${err}`);
+		}
+	}
 }

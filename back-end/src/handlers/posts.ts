@@ -9,6 +9,7 @@ import { CRUD } from "../types/CRUDSenarioType";
 // Building endpoints
 const postRoutes = (app: express.Application): void => {
 	app.get('/index-posts', index);
+	app.get('/post/:id', show); // New route for fetching a single post by ID
 	app.post('/post', create);
 	app.delete('/post/:id', remove)
 };
@@ -26,6 +27,21 @@ const index = async (_req: Request, res: Response) => {
 		throw err;
 	}
 };
+
+// Handler for fetching a single post by ID
+const show = async (req: Request, res: Response) => {
+	try {
+		const postId = req.params.id; // Get the ID from the route parameter
+		const post = await store.show(postId); // Assuming there's a show method in PostStore
+
+		res.status(200);
+		res.json(post);
+	} catch (err) {
+		console.log(`Error fetching post: ${err}`);
+		res.status(400);
+		res.json(err as string);
+	}
+}
 
 const create = async (req: Request, res: Response) => {
 
@@ -66,6 +82,7 @@ const remove = async (req: Request, res: Response) => {
 		return;
 	}
 }
+
 
 
 
