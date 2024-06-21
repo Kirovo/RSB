@@ -60,7 +60,7 @@ export class PostStore {
 		}
 	}
 
-	async remove(id: string | number) {
+	async remove(id: string | number) : Promise<void> {
 		try {
 			const conn = await client.connect();
 			let sql =

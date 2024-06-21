@@ -76,7 +76,7 @@ export class IdentificationStore {
 			const sql1 =
 				'INSERT INTO users (email, password_digest) VALUES($1, $2) RETURNING (id)';
 			const sql2=	
-                'INSERT INTO profiles (id_user, firstname, lastname, mobile, birthdate, gendre, address, city, postalcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING (id)';
+                'INSERT INTO profiles (id_user, firstname, lastname, mobile, birthdate, gendre, address, city, postalcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
 			const result1 = await conn.query(sql1, [u.email,hash]);
 			const user = result1.rows[0];
 			const result2 = await conn.query(sql2, [user.id,i.firstname,i.lastname,i.mobile,i.birthdate,i.gendre,i.address,i.city,i.postalcode]);

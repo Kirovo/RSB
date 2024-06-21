@@ -10,10 +10,10 @@ import { CRUDHandlerError } from '../errors/CRUDError';
 
 // Building endpoints
 const commentRoutes = (app: express.Application): void => {
-	app.get('/index-comments', index);
+	app.get('/comments', index);
 	app.get('/comment/:id', show); // New route for fetching a single comment
 	app.post('/comment', create);
-	app.delete('/comment', remove)
+	app.delete('/comment/:id', remove)
 };
 
 // Creating a reference to the CommentStore class
@@ -67,7 +67,8 @@ const create = async (req: Request, res: Response) => {
 
 			const comment: Comment = {
 				id_post: req.body.id_post,
-				id_profile: res.locals.id, // id_profile from userAccreditation middleware
+				id_profile: req.body.id_profile, // id_profile from userAccreditation middleware
+				// id_profile: res.locals.id, // id_profile from userAccreditation middleware
 				content: req.body.content
 			}
 
@@ -96,16 +97,10 @@ const remove = async (req: Request, res: Response) => {
 
 		try {
 
-			const comment: Comment = {
-				id: req.query.id_comment as string,
-				id_post: req.query.id_post as string,
-				id_profile: res.locals.id,
-			}
-
-			const deleteComment = await store.remove(comment)
+			await store.remove(req.params.id)
 
 			res.status(205);
-			res.json(deleteComment);
+			res.json('deleted');
 		}
 		catch (err) {
 
