@@ -8,7 +8,7 @@ import { CRUD } from "../types/CRUDSenarioType";
 
 // Building endpoints
 const postRoutes = (app: express.Application): void => {
-	app.get('/index-posts', index);
+	app.get('/posts', index);
 	app.get('/post/:id', show); // New route for fetching a single post by ID
 	app.post('/post', create);
 	app.delete('/post/:id', remove)
@@ -49,12 +49,12 @@ const create = async (req: Request, res: Response) => {
 	try {
 
 		const post: Post = {
-			id_profile: res.locals.id,
+			id_profile: req.body.id_profile,
+			// id_profile: res.locals.id, to use UserAccreditation middleware
 			topic: req.body.topic,
 		}
 
 		const newPost = await store.create(post);
-		console.log(newPost)
 		res.status(200);
 		res.json(newPost);
 

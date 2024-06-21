@@ -22,7 +22,7 @@ def create_test_user():
     user_id = user_response.json()['id']
     yield user_id
     # Cleanup after test
-    requests.delete(f"{BASE_URL}/register/{user_id}")
+    requests.delete(f"{BASE_URL}/user/{user_id}")
 
 @pytest.fixture
 def create_post(create_test_user):
@@ -52,7 +52,7 @@ def test_create_post(create_post):
 
 def test_index_posts(create_post):
     post_id = create_post
-    url = f"{BASE_URL}/index-posts"
+    url = f"{BASE_URL}/posts"
     response = requests.get(url)
     assert response.status_code == 200
     assert isinstance(response.json(), list)  # Expecting a list of posts
@@ -66,7 +66,15 @@ def test_delete_post(create_post):
     assert response.status_code == 205
     assert response.text == '"deleted"'
     # Verify the post is actually deleted
-    response = requests.get(f"{BASE_URL}/index-posts")
+    response = requests.get(f"{BASE_URL}/posts")
     assert not any(post['id'] == post_id for post in response.json())
 
-
+def test_show_post(create_post):
+    post_id = create_post
+    url = f"{BASE_URL}/post/{post_id}"
+    response = requests.get(url)
+    assert response.status_code == 200
+    post_data = response.json()
+    assert post_data['id'] == post_id
+    assert post_data['topic'] == "Test Topic"
+    # Additional assertions can be added to verify other aspects of the post

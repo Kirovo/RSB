@@ -102,9 +102,25 @@ export class IdentificationStore {
     }
 
     // Method to delete a user by ID
-    async remove(id: string | number): Promise<User | null> {
+    async remove(id: string | number): Promise<null> {
         try {
-            const sql = 'DELETE FROM users WHERE id=($1) RETURNING *';
+			const sql1 = 'DELETE FROM profiles WHERE id=($1) RETURNING (id_user)';
+            const sql2 = 'DELETE FROM users WHERE id=($1)';
+            const conn = await client.connect();
+            const result = await conn.query(sql1, [id]);
+			await conn.query(sql2, [result.rows[0].id_user]);
+            conn.release();
+
+            return null;
+            
+        } catch (err) {
+            throw new Error(`Could not delete user ${id}. Error: ${err}`);
+        }
+    }
+
+    async showProfile(id: string | number): Promise<Profile | null> {
+        try {
+            const sql = 'SELECT * FROM profiles WHERE id=($1)';
             const conn = await client.connect();
             const result = await conn.query(sql, [id]);
             conn.release();
@@ -115,7 +131,19 @@ export class IdentificationStore {
                 return null;
             }
         } catch (err) {
-            throw new Error(`Could not delete user ${id}. Error: ${err}`);
+            throw new Error(`Could not find profile ${id}. Error: ${err}`);
+        }
+    }
+
+    async indexProfiles(): Promise<Profile[]> {
+        try {
+            const sql = 'SELECT * FROM profiles';
+            const conn = await client.connect();
+            const result = await conn.query(sql);
+            conn.release();
+            return result.rows;
+        } catch (err) {
+            throw new Error(`Could not fetch profiles. Error: ${err}`);
         }
     }
 
