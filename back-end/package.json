@@ -10,7 +10,8 @@
     "db-save": "pg_dump -U postgres -T migrations -a dev > db.sql",
     "build": "npx tsc",
     "jasmine": "jasmine-ts",
-    "start": "nodemon src/server.ts"
+    "start": "nodemon src/server.ts",
+    "migrate-test": "db-migrate up -e test --config database.json"
   },
   "author": "Kirovo",
   "license": "ISC",
@@ -60,3 +61,4 @@
     "typescript": "^4.3.5"
   }
 }
+

@@ -7,19 +7,19 @@ import { errorDisplayer } from '../services/errorDisplayer';
 import { CRUDHandlerError } from '../errors/CRUDError';
 import multer from 'multer';
 import path from 'path';
-import {promises as fsPromises} from 'fs'
+import { promises as fsPromises } from 'fs'
 
 
 const storage = multer.diskStorage({
-	destination: function(_req,_file,cb){
-		cb(null,'./images')
+	destination: function (_req, _file, cb) {
+		cb(null, './images')
 	},
-	filename: function (_req,file,cb){
+	filename: function (_req, file, cb) {
 		cb(null, file.originalname)
 	}
 })
 
-const upload = multer({storage:storage});
+const upload = multer({ storage: storage });
 
 // Building endpoints
 const attachmentRoutes = (app: express.Application): void => {
@@ -38,7 +38,7 @@ const index = async (_req: Request, res: Response) => {
 
 	try {
 
-		try{
+		try {
 			store.CRUDSenario.crud = CRUD.Index
 
 			const allActivityAttachments = await store.index();
@@ -53,7 +53,7 @@ const index = async (_req: Request, res: Response) => {
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 };
 
@@ -67,7 +67,7 @@ const create = async (req: Request, res: Response) => {
 			const attachment: Attachment = {
 				id_post: req.body.id_post,
 				id_profile: res.locals.id, // id_profile from userAccreditation middleware
-				path: req.file?.path, 
+				path: req.file?.path,
 				filename: req.file?.filename,
 				mime: req.file?.mimetype,
 			}
@@ -78,15 +78,15 @@ const create = async (req: Request, res: Response) => {
 
 			res.status(205);
 			res.json(NewAttachment);
-		} 
-		catch{
+		}
+		catch {
 
 			throw new CRUDHandlerError(store.CRUDSenario)
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 };
 
@@ -100,7 +100,7 @@ const remove = async (req: Request, res: Response) => {
 			const attachment: Attachment = {
 				id: req.query.id_attachment as string,
 				id_post: req.query.id_post as string,
-				id_profile : res.locals.id,
+				id_profile: res.locals.id,
 			}
 
 			const deleteAttachment = await store.remove(attachment)
@@ -108,27 +108,27 @@ const remove = async (req: Request, res: Response) => {
 			res.status(205);
 			res.json(deleteAttachment);
 		}
-		catch (err){
+		catch (err) {
 
 			throw new CRUDHandlerError(store.CRUDSenario)
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err,res)
+		errorDisplayer(err, res)
 	}
 }
 
 const fileReader = async (req: Request, res: Response) => {
-	try{
+	try {
 		const attachment = await store.fileReader(req.params.id);
 		if (attachment) {
-			const field = path.normalize('D:/ProjetsDéveloppementsWeb/RSB/back-end/'+ attachment.path)
+			const field = path.normalize('D:/ProjetsDéveloppementsWeb/RSB/back-end/' + attachment.path)
 			await fsPromises.readFile(field)
 			res.sendFile(field)
 		}
 	}
-	catch (err){ 
+	catch (err) {
 		throw new Error('unable to read the file :' + err)
 	}
 };

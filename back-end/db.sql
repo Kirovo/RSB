@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.4
--- Dumped by pg_dump version 13.4
+-- Dumped from database version 14.2
+-- Dumped by pg_dump version 14.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,7 +21,7 @@ SET row_security = off;
 --
 
 COPY public.users (id, email, password_digest) FROM stdin;
-1	franz-wer770@hotmail.fr	$2b$05$yj.p.EqOlPnt7YC6FfdNx.F70QI3DxA984i3dsXPmq.hosayOQVeC
+1	admin@admin.com	$2b$05$OxNYOi/HoPk8Q2vuQfecR.QYgRRT7NyeH4v.7dyc82KkUC87aC78m
 \.
 
 
@@ -30,7 +30,7 @@ COPY public.users (id, email, password_digest) FROM stdin;
 --
 
 COPY public.profiles (id, id_user, firstname, lastname, mobile, birthdate, gendre, address, city, postalcode) FROM stdin;
-1	1	francois	weryha	0629766600	01/12/1993	Male	8 rue des sources	tenteling	57980
+1	1	admin	admin	0123456789	12/12/12	Male	01 admin	Admin	01234
 \.
 
 
@@ -39,9 +39,6 @@ COPY public.profiles (id, id_user, firstname, lastname, mobile, birthdate, gendr
 --
 
 COPY public.posts (id, id_profile, topic) FROM stdin;
-1	1	azertyui
-2	1	
-3	1	
 \.
 
 
@@ -50,9 +47,6 @@ COPY public.posts (id, id_profile, topic) FROM stdin;
 --
 
 COPY public.attachments (id, id_profile, id_post, path, filename, mime) FROM stdin;
-1	1	1	images\\pexels-photo-9749870.jpeg	pexels-photo-9749870.jpeg	image/jpeg
-2	1	2	images\\photo-1541963463532-d68292c34b19.jfif	photo-1541963463532-d68292c34b19.jfif	image/jpeg
-3	1	3	images\\tree-736885__480.jpg	tree-736885__480.jpg	image/jpeg
 \.
 
 
@@ -76,7 +70,7 @@ COPY public.reactions (id, id_post, id_profile) FROM stdin;
 -- Name: attachments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.attachments_id_seq', 3, true);
+SELECT pg_catalog.setval('public.attachments_id_seq', 1, false);
 
 
 --
@@ -90,14 +84,14 @@ SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.migrations_id_seq', 7, true);
+SELECT pg_catalog.setval('public.migrations_id_seq', 8, true);
 
 
 --
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 3, true);
+SELECT pg_catalog.setval('public.posts_id_seq', 1, false);
 
 
 --

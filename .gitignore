@@ -1,0 +1,7 @@
+.vs
+.pytest_cache
+.gitignore
+.DS_Store
+.idea
+.vscode
+.venv
