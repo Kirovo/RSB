@@ -2,7 +2,7 @@
 import client from '../database';
 import { CRUDModelError } from '../errors/CRUDError';
 import { ActivityAction, CRUD, CRUDSenario } from "../types/CRUDSenarioType";
-
+import { CRUDModel } from "./CRUDModel";
 
 
 // Create Post type
@@ -16,8 +16,11 @@ export type Post = {
 };
 
 
-export class PostStore {
+// const postStore = new CRUDModel('post',{})
 
+
+export class PostStore extends CRUDModel {
+	
 	public CRUDSenario: CRUDSenario = {
 		crud: undefined,
 		activityAction: ActivityAction.Post
@@ -28,11 +31,11 @@ export class PostStore {
 		try {
 
 			const conn = await client.connect();
-				const sql =
-					'SELECT * FROM posts ORDER BY posts.id DESC;';
-				const result = await conn.query(sql);
+			const sql =
+			'SELECT * FROM posts ORDER BY posts.id DESC;';
+			const result = await conn.query(sql);
 			conn.release();
-
+			
 			return result.rows;
 		}
 		catch (err) {
@@ -41,6 +44,23 @@ export class PostStore {
 		}
 	}
 	
+	async show(id: string | number): Promise<Post | null> {
+		try {
+			const sql = 'SELECT * FROM posts WHERE id=($1)';
+			const conn = await client.connect();
+			const result = await conn.query(sql, [id]);
+			conn.release();
+	
+			if (result.rows.length) {
+				return result.rows[0];
+			} else {
+				return null;
+			}
+		} catch (err) {
+			throw new Error(`Could not find post ${id}. Error: ${err}`);
+		}
+	}
+
 	async create(p: Post): Promise<Post> {
 
 		try {
@@ -82,20 +102,4 @@ export class PostStore {
 	}
 
     // Method to fetch a single post by ID
-    async show(id: string | number): Promise<Post | null> {
-        try {
-            const sql = 'SELECT * FROM posts WHERE id=($1)';
-            const conn = await client.connect();
-            const result = await conn.query(sql, [id]);
-            conn.release();
-
-            if (result.rows.length) {
-                return result.rows[0];
-            } else {
-                return null;
-            }
-        } catch (err) {
-            throw new Error(`Could not find post ${id}. Error: ${err}`);
-        }
-    }
 }
