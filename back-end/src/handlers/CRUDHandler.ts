@@ -64,6 +64,7 @@ export class CRUDHandler extends CRUDModel {
     remove = async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
+            
             const result = await this.model.removeInDB(id);
             res.json(result);
         }

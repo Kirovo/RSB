@@ -9,7 +9,8 @@ export type Element = {
         create: boolean;
 		update: boolean;
         remove: boolean;
-    }
+    },
+	childElements?: Element[];
 }
 
 export class CRUDModel {
@@ -81,20 +82,39 @@ export class CRUDModel {
 	}
 	
 	removeInDB: (id: string | number) => Promise<any> = async (id: string | number) => {
-		try {
-			const conn = await client.connect();
-			const sql = `DELETE FROM ${this.element.name}s WHERE id=($1) RETURNING *;`;
-			const result = await conn.query(sql, [id]);
-			conn.release();
-			if (result.rows.length) {
-				return result.rows[0];
-			} else {
-				return null;
-			}
-		} catch (err) {
-			throw new Error(`Could not delete ${this.element.name} with ID ${id}. Error: ${err}`);
-		}
+        const deletechildElements = async (conn: any, element: Element, id: string | number) => {
+            if (element.childElements) {
+				console.log(element.childElements)
+                for (const subElement of element.childElements) {
+                    // Recursively delete sub-elements of sub-elements
+                    await deletechildElements(conn, subElement, id);
 
+                    // Delete the current sub-element
+                    const sql = `DELETE FROM ${subElement.name}s WHERE id_${element.name}=($1) RETURNING *;`;
+                    await conn.query(sql, [id]);
+                }
+            }
+        };
+
+        try {
+            const conn = await client.connect();
+
+            // Recursively delete all sub-elements
+            await deletechildElements(conn, this.element, id);
+
+            // Delete the main element
+            const sql = `DELETE FROM ${this.element.name}s WHERE id=($1) RETURNING *;`;
+            const result = await conn.query(sql, [id]);
+            conn.release();
+
+            if (result.rows.length) {
+                return result.rows[0];
+            } else {
+                return null;
+            }
+        } catch (err) {
+            throw new Error(`Could not delete ${this.element.name} with ID ${id}. Error: ${err}`);
+        }
 	}
 	// removeInDB: () => Promise<any> = async () => {
 	// 	try {
@@ -119,7 +139,6 @@ export class CRUDModel {
 
 
 }
-
 
 
 

@@ -2,8 +2,10 @@
 import express from 'express';
 import { CRUDRoutes } from '../services/CRUDRoutes';
 import { Element } from '../models/CRUDModel';
+import { comment } from './comments';
+import { reaction } from './reactions';
 
-const Post: Element = {
+export const post: Element = {
 	name: 'post',
 	secure: {
 		index: false,
@@ -11,12 +13,16 @@ const Post: Element = {
 		create: true,
 		update: true,
 		remove: true,
-	}
+	},
+	childElements: [
+		comment, 
+		reaction
+	]
 };
 
 // Building endpoints
 const postRoutes = (app: express.Application): void => {
-	 new CRUDRoutes(Post, app)
+	 new CRUDRoutes(post, app)
 };
 
 // Creating a reference to the PostStore class

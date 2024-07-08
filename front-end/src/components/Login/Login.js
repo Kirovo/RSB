@@ -23,11 +23,13 @@ class Login extends React.Component {
                 email: this.state.inputEmail,
                 password: this.state.inputPassword
             });
+            console.log(response)
             const { data: token } = response;
-
+            console.log(token)
             this.setState({ inputEmail: '', inputPassword: '', err: false });
             tokenContext.saveToken(token, this.state.keepLogged);
             authContext.login(this.state.keepLogged);
+
         } catch (error) {
             console.error('Login error:', error);
             this.setState({ err: true });

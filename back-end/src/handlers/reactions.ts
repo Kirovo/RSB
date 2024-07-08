@@ -4,7 +4,7 @@ import { CRUDRoutes } from '../services/CRUDRoutes';
 import { Element } from '../models/CRUDModel';
 
 
-const Reaction: Element = {
+export const reaction: Element = {
 	name: 'reaction',
 	secure: {
 		index: false,
@@ -17,7 +17,7 @@ const Reaction: Element = {
 
 // Building endpoints
 const reactionRoutes = (app: express.Application): void => {
-	new CRUDRoutes(Reaction, app)
+	new CRUDRoutes(reaction, app)
 };
 
 

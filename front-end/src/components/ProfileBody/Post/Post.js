@@ -17,7 +17,7 @@ function Post(props) {
                 id_post: id_post
             }, {
             headers: {
-                'Authorization': props.token.data
+                'Authorization': `Bearer ${props.token}`
             }
         })
 
@@ -35,7 +35,7 @@ function Post(props) {
             content: comment
         }, {
             headers: {
-                'Authorization': props.token.data
+                'Authorization': `Bearer ${props.token}`
             }
         })
         setComment('')
@@ -43,13 +43,12 @@ function Post(props) {
     }
 
     const deleteCom = async (e) => {
-        const id_post = e.target.getAttribute('id_post')
         const id_comment = e.target.getAttribute('id_comment')
 
-        await axios.delete(`http://localhost:2000/comment?id_post=${id_post}&id_comment=${id_comment}`, {
-        }, {
+        await axios.delete(`http://localhost:2000/comment/${id_comment}`,  
+        {
             headers: {
-                'Authorization': props.token.data
+                'Authorization': `Bearer ${props.token}`
             }
         })
         ctxre.Refresh()
@@ -57,7 +56,15 @@ function Post(props) {
     }
 
     const deletePost = async (e) => {
-        props.deletePost(e.currentTarget.key)
+        const id_post = e.currentTarget.getAttribute('data-id_post');
+        await axios.delete(`http://localhost:2000/post/${id_post}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${props.token}`
+            }
+        })
+        ctxre.Refresh(true)
+
 
     }
 
@@ -67,7 +74,7 @@ function Post(props) {
         <div className='border-radius border-shadow post' key={props.post.id}>
             <div className='sender-header'>
                 <div className='sender-profile'></div>
-                <button className='close-button' onClick={deletePost}>&#x2715;</button>
+                <button className='close-button' data-id_post={props.post.id} onClick={deletePost}>&#x2715;</button>
             </div>
             <h2 className='topic'>{props.post.topic}</h2>
             <img className='post' src={'http://localhost:2000/attachment/' + props.post.id} alt={props.post.path} />

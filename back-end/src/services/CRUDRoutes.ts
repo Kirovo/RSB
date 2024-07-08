@@ -17,10 +17,10 @@ export class CRUDRoutes extends CRUDHandler {
 
     routes = (): void => {
         this.app.get(`/${this.element.name}s`, this.indexMiddleware, this.handler.index);
-        this.app.get(`/${this.element.name}/:id`, this.showMiddleware, this.handler.show); // New route for fetching a single post by ID
+        this.app.get(`/${this.element.name}/:id`, this.showMiddleware, this.handler.show);
         this.app.post(`/${this.element.name}`, this.createMiddleware, this.handler.create);
-        this.app.delete(`/${this.element.name}/:id`, this.removeMiddleware, this.handler.remove);
         this.app.put(`/${this.element.name}/:id`, this.updateMiddleware, this.handler.update);
+        this.app.delete(`/${this.element.name}/:id`, this.removeMiddleware, this.handler.remove);
     }
 
     indexMiddleware = (req: Request, res: Response, next: NextFunction): void => {

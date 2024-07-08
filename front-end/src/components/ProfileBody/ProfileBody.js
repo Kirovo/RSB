@@ -10,7 +10,7 @@ import Post from './Post/Post';
 import TokenContext from '../../contexts/tokenContext';
 import ModalContext from '../../contexts/modalContext';
 import RefreshContext from '../../contexts/refreshContext';
-import { Index, Delete } from '../../api/activity';
+import { Index } from '../../api/activity';
 import WorkInProgress from '../../common/WorkInProgress/WorkInProgress';
 
 
@@ -41,11 +41,7 @@ function ProfileBody(props) {
 
     }
     
-    const deletePost = async (id) => {
-        await Delete(id)
-        ctxre.Refresh(true)
 
-    }
 
 
     useEffect(()=>{
@@ -74,7 +70,7 @@ function ProfileBody(props) {
                     </div>
                     {posts ? (
                             posts.map((post, index) => (
-                                <Post key={index} token={ctxto.token} post={post} comments={comments} deletePost={()=>deletePost(post.id)} reactions={reactions}/>
+                                <Post key={index} token={ctxto.token} post={post} comments={comments} reactions={reactions}/>
                             ))
                     ):(
                         <>No posts</>

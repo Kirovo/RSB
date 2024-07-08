@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function Index(element) {
 
     const allPosts = [];
@@ -16,7 +17,3 @@ export async function Index(element) {
     }
 }
 
-export async function Delete(id) {
-    const res = await axios.delete(`http://localhost:2000/post/${id}`) 
-    return res
-}
