@@ -70,10 +70,4 @@ export class CRUDRoutes extends CRUDHandler {
             next();
         }
     }
-
-
-
-    // Creating relation between routes and database
-
-
 }

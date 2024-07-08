@@ -3,7 +3,6 @@ import express from 'express';
 import { CRUDRoutes } from '../services/CRUDRoutes';
 import { Element } from '../models/CRUDModel';
 
-
 const Post: Element = {
 	name: 'post',
 	secure: {

@@ -2,12 +2,12 @@ import { Response } from 'express';
 import jwtDecode from 'jwt-decode';
 
 // This middleware verifies the accessibility of the request and retreive user credentials
-const tokenToUser = (token : string, res : Response): void => {
+const tokenToUser = (token: string, res: Response): void => {
 
 	try {
 
 		// Convert the decoded token to a readable user object
-		const userCredentials = 
+		const userCredentials =
 			JSON.parse(
 				JSON.stringify(
 					jwtDecode(token)
