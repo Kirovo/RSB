@@ -12,7 +12,7 @@ function Post(props) {
         e.preventDefault();
 
         const id_post = e.target.getAttribute('id_post')
-        await axios.post(`http://localhost:2000/reaction`,
+        await axios.post(`http://localhost:2000/trigger-reaction`,
             {
                 id_post: id_post
             }, {

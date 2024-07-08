@@ -8,6 +8,7 @@ import { CRUDHandlerError } from '../errors/CRUDError';
 import multer from 'multer';
 import path from 'path';
 import { promises as fsPromises } from 'fs'
+import { Element } from '../models/CRUDModel';
 
 
 const storage = multer.diskStorage({
@@ -18,6 +19,17 @@ const storage = multer.diskStorage({
 		cb(null, file.originalname)
 	}
 })
+
+export const attachment: Element = {
+	name: 'attachment',
+	secure: {
+		index: true,
+		show: true,
+		create: true,
+		update: true,
+		remove: true
+	}
+}
 
 const upload = multer({ storage: storage });
 

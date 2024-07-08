@@ -4,6 +4,7 @@ import { CRUDRoutes } from '../services/CRUDRoutes';
 import { Element } from '../models/CRUDModel';
 import { comment } from './comments';
 import { reaction } from './reactions';
+import { attachment } from './attachments';
 
 export const post: Element = {
 	name: 'post',
@@ -16,7 +17,8 @@ export const post: Element = {
 	},
 	childElements: [
 		comment, 
-		reaction
+		reaction,
+		attachment
 	]
 };
 

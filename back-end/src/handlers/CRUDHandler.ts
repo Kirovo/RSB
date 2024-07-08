@@ -9,7 +9,6 @@ export class CRUDHandler extends CRUDModel {
         super(element);
         this.element = element;
         this.model = new CRUDModel(this.element);
-        
     }
 
 
@@ -39,7 +38,6 @@ export class CRUDHandler extends CRUDModel {
         try {
             
             const body = {id_profile: res.locals.id, ...req.body};
-            console.log(body);
             const result = await this.model.createInDB(body);
             res.json(result);
         }
@@ -64,7 +62,7 @@ export class CRUDHandler extends CRUDModel {
     remove = async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
-            
+
             const result = await this.model.removeInDB(id);
             res.json(result);
         }

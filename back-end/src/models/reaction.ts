@@ -1,6 +1,5 @@
 // Importing client of database to connect to
 import client from '../database';
-import { CRUD } from "../types/CRUDSenarioType";
 
 
 
@@ -12,19 +11,7 @@ export type Reaction = {
 // Creating products's class with CRUD and addProducts functions
 export class ReactionStore {
 
-	async index(): Promise<Reaction[]> {
-		try {
-			const conn = await client.connect();
-			const sql =
-				'SELECT * FROM reactions;';
-			const result = await conn.query(sql);
-			conn.release();
-			return result.rows;
-		} catch (err) {
-			throw new Error(`unable get comments: ${err}`);
-		}
-	}
-	async create(r : Reaction) {
+	async triggerReaction(r : Reaction) {
 		try {
 			const conn = await client.connect();
 
