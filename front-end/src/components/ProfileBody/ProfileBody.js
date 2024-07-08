@@ -31,9 +31,9 @@ function ProfileBody(props) {
 
 
     const indexElements = async ()=>{
-        const idx1 = await Index('posts')
-        const idx2 = await Index('comments')
-        const idx3 = await Index('reactions')
+        const idx1 = await Index('post')
+        const idx2 = await Index('comment')
+        const idx3 = await Index('reaction')
 
         setPosts(idx1)
         setComments(idx2)

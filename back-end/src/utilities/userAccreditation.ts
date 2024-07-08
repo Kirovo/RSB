@@ -19,6 +19,7 @@ const userAccreditation = (req: Request, res: Response, next: NextFunction): voi
 		// retreive user credentials from the given token and save them localy
 		tokenToUser(token,res)
 
+
 		next();
 
 	} catch (err) {

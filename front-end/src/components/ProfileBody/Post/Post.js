@@ -8,14 +8,14 @@ function Post(props) {
     const [comment, setComment] = useState('');
     const ctxre = useContext(RefreshContext)
 
-    const reacting = async (e) =>{
+    const reacting = async (e) => {
         e.preventDefault();
 
         const id_post = e.target.getAttribute('id_post')
         await axios.post(`http://localhost:2000/reaction`,
-        {
-            id_post:id_post
-        },{
+            {
+                id_post: id_post
+            }, {
             headers: {
                 'Authorization': props.token.data
             }
@@ -23,7 +23,7 @@ function Post(props) {
 
 
         ctxre.Refresh()
-    } 
+    }
 
     const commenting = async (e) => {
 
@@ -31,9 +31,9 @@ function Post(props) {
         const id_post = e.target.getAttribute('id_post')
 
         await axios.post('http://localhost:2000/comment', {
-            id_post:id_post,
+            id_post: id_post,
             content: comment
-        },{
+        }, {
             headers: {
                 'Authorization': props.token.data
             }
@@ -42,12 +42,12 @@ function Post(props) {
         ctxre.Refresh()
     }
 
-    const deleteCom = async (e)=> {
+    const deleteCom = async (e) => {
         const id_post = e.target.getAttribute('id_post')
         const id_comment = e.target.getAttribute('id_comment')
 
         await axios.delete(`http://localhost:2000/comment?id_post=${id_post}&id_comment=${id_comment}`, {
-        },{
+        }, {
             headers: {
                 'Authorization': props.token.data
             }
@@ -58,7 +58,7 @@ function Post(props) {
 
     const deletePost = async (e) => {
         props.deletePost(e.currentTarget.key)
-        
+
     }
 
 
@@ -70,52 +70,52 @@ function Post(props) {
                 <button className='close-button' onClick={deletePost}>&#x2715;</button>
             </div>
             <h2 className='topic'>{props.post.topic}</h2>
-            <img className='post' src={'http://localhost:2000/attachment/'+ props.post.id} alt={props.post.path}/>
+            <img className='post' src={'http://localhost:2000/attachment/' + props.post.id} alt={props.post.path} />
             {/* To resetup on back-end & refactor to consider all doc types see ref i navigator favorites*/}
-                <div className='reaction'>
-                    <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>
-                    <div className='reaction-number-box'>
+            <div className='reaction'>
+                <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>
+                <div className='reaction-number-box'>
                     {props.reactions ? (
                         (props.reactions.filter(reaction => reaction.id_post === props.post.id).length !== 0) ? (
 
-                        
+
                             <label>&#128077; {props.reactions.filter(reaction => reaction.id_post === props.post.id).length}</label>
-                        
-                    ):(
-                        <></>
-                    )
-                    ):(
+
+                        ) : (
+                            <></>
+                        )
+                    ) : (
                         <></>
                     )}
 
-                    </div>
                 </div>
+            </div>
             <div>
 
 
-            <div >
-                {props.comments ? (
-                    (props.comments.filter(comment => comment.id_post === props.post.id).length !== 0)  ? (
-                    
-                        <div>
-                            {props.comments.filter(comment => comment.id_post === props.post.id).map(comment => (
-                                <div className='comments' key={comment.id}>
-                                    <div>{comment.content}</div>
-                                    <button className='close-button' id_post={comment.id_post} id_comment={comment.id} onClick={deleteCom} type="button">&#x2715;</button>
-                                </div>
-                            ))}                      
-                        </div>
-                    ):(
-                        <></>
+                <div >
+                    {props.comments ? (
+                        (props.comments.filter(comment => comment.id_post === props.post.id).length !== 0) ? (
+
+                            <div>
+                                {props.comments.filter(comment => comment.id_post === props.post.id).map(comment => (
+                                    <div className='comments' key={comment.id}>
+                                        <div>{comment.content}</div>
+                                        <button className='close-button' id_post={comment.id_post} id_comment={comment.id} onClick={deleteCom} type="button">&#x2715;</button>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <></>
                         )
-                ):(<></>)
-                }
-                    
-            </div>
-            <form className='create-comment' id_post={props.post.id} onSubmit={commenting}>
-                <input value={comment} onChange={e => setComment(e.target.value)} placeholder='Comment'></input>
-                <button>Send</button>
-            </form>
+                    ) : (<></>)
+                    }
+
+                </div>
+                <form className='create-comment' id_post={props.post.id} onSubmit={commenting}>
+                    <input value={comment} onChange={e => setComment(e.target.value)} placeholder='Comment'></input>
+                    <button>Send</button>
+                </form>
             </div>
         </div>
     )

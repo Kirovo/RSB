@@ -39,7 +39,7 @@ const profile: Element = {
 // Building endpoints
 const identificationRoutes = (app: express.Application): void => {
     app.post('/register', upload.none(), register);
-    app.get('/login', upload.none(), login);
+    app.post('/login', upload.none(), login);
     new CRUDRoutes(user, app)
     new CRUDRoutes(profile, app)
 };
@@ -66,11 +66,11 @@ const register = async (req: Request, res: Response) => { // POST /register
     res.json(register)
 }
 
-const login = async (req: Request, res: Response) => { // GET /login
+const login = async (req: Request, res: Response) => { // POST /login
     try {
         const user: User = {
-            email: req.query.email as string,
-            password: req.query.password as string
+            email: req.body.email, 
+            password: req.body.password
         }
         const identity = await store.login(user);
         const token = jwt.sign({ identity }, process.env.TOKEN_SECRET as string)

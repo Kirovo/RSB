@@ -1,32 +1,30 @@
 import React from 'react';
 import './Login.css'
-import {Link, Navigate} from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import axios from '../../axios';
 import TokenContext from '../../contexts/tokenContext';
 import AuthContext from '../../contexts/authContext';
 
 class Login extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            inputEmail :'franz-wer770@hotmail.fr',
-            inputPassword :'azerty',
-            err:false,
-            token:undefined,
-            keepLogged:false
+            inputEmail: 'admin@admin.com',
+            inputPassword: 'admin',
+            err: false,
+            token: undefined,
+            keepLogged: false
         };
     }
-    
+
     logging = async (tokenContext, authContext) => {
         try {
-            const response = await axios.get('/login', {
-                params: {
-                    email: this.state.inputEmail,
-                    password: this.state.inputPassword
-                }
+            const response = await axios.post('/login', {
+                email: this.state.inputEmail,
+                password: this.state.inputPassword
             });
             const { data: token } = response;
-            
+
             this.setState({ inputEmail: '', inputPassword: '', err: false });
             tokenContext.saveToken(token, this.state.keepLogged);
             authContext.login(this.state.keepLogged);

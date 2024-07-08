@@ -37,8 +37,23 @@ export class CRUDHandler extends CRUDModel {
 
     create = async (req: Request, res: Response) => {
         try {
-            console.log(req.body);
-            const result = await this.model.createInDB(req.body);
+            
+            const body = {id_profile: res.locals.id, ...req.body};
+            console.log(body);
+            const result = await this.model.createInDB(body);
+            res.json(result);
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+
+    update = async (req: Request, res: Response) => {
+        try {
+            const id = req.params.id;
+            const body = {id_profile: res.locals.id, ...req.body};
+
+            const result = await this.model.updateInDB(id, body);
             res.json(result);
         }
         catch (err) {
@@ -57,15 +72,5 @@ export class CRUDHandler extends CRUDModel {
         }
     }
 
-    update = async (req: Request, res: Response) => {
-        try {
-            const id = req.params.id;
-            const result = await this.model.updateInDB(id, req.body);
-            res.json(result);
-        }
-        catch (err) {
-            throw err;
-        }
-    }
 
 }

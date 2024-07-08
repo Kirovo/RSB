@@ -29,7 +29,7 @@ export class CRUDModel {
 		}
 		catch (err) {
 
-			// throw new CRUDModelError(this.element)
+			throw new Error(`Could not find ${this.element.name}s. Error: ${err}`);
 		}
 	}
 
@@ -47,7 +47,7 @@ export class CRUDModel {
 				return null;
 			}
 		} catch (err) {
-			throw new Error(`Could not find post ${id}. Error: ${err}`);
+			throw new Error(`Could not find ${this.element.name} ${id}. Error: ${err}`);
 		}
 	}
 
