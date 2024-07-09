@@ -73,6 +73,7 @@ const login = async (req: Request, res: Response) => { // POST /login
             password: req.body.password
         }
         const identity = await store.login(user);
+        console.log(identity)
         const token = jwt.sign({ identity }, process.env.TOKEN_SECRET as string)
         res.json(token);
     } catch (err) {
