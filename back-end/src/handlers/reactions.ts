@@ -1,10 +1,11 @@
 // Import every module to make a handler from post model
-import express from 'express';
 import { CRUDRoutes } from '../services/CRUDRoutes';
 import { Element } from '../models/CRUDModel';
+import  userAccreditation  from '../utilities/userAccreditation'
+import express, { Request, Response } from 'express';
+import { Reaction, ReactionStore } from '../models/reaction';
 
-
-const Reaction: Element = {
+export const reaction: Element = {
 	name: 'reaction',
 	secure: {
 		index: false,
@@ -15,9 +16,37 @@ const Reaction: Element = {
 	}
 };
 
+
+
+
+
 // Building endpoints
 const reactionRoutes = (app: express.Application): void => {
-	new CRUDRoutes(Reaction, app)
+	new CRUDRoutes(reaction, app)
+	app.post('/trigger-reaction', userAccreditation ,triggerReaction);
+};
+
+// Creating a reference to the PostStore class
+const store = new ReactionStore();
+
+
+const triggerReaction = async (req: Request, res: Response) => {
+
+	try {
+		const reaction: Reaction = {
+			id_post: req.body.id_post,
+			id_profile: res.locals.id // id_profile from userAccreditation middleware
+		}
+		console.log(reaction)
+
+		const reactions = await store.triggerReaction(reaction);
+		res.json(reactions);
+
+	}
+	catch (err) {
+		throw new Error(`unable to create reaction: ${err}`)
+	}
+
 };
 
 

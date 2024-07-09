@@ -29,7 +29,7 @@ function Modal(){
             },            
             {   
                 headers: {
-                    'Authorization': ctxto.token.data
+                    'Authorization': `Bearer ${ctxto.token}`
                 }
             }
         )
@@ -44,7 +44,7 @@ function Modal(){
                 {   
                     headers: {
                         'Content-type': 'multipart/form-data',
-                        'Authorization': ctxto.token.data
+                        'Authorization': `Bearer ${ctxto.token}`
                     }
                 }
             )

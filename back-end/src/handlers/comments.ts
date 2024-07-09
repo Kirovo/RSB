@@ -5,7 +5,7 @@ import { Element } from '../models/CRUDModel';
 
 
 
-const Comment: Element = {
+export const comment: Element = {
 	name: 'comment',
 	secure: {
 		index: false,
@@ -18,7 +18,7 @@ const Comment: Element = {
 
 // Building endpoints
 const commentRoutes = (app: express.Application): void => {
-	 new CRUDRoutes(Comment, app)
+	 new CRUDRoutes(comment, app)
 };
 
 // Allowing routes to be called
