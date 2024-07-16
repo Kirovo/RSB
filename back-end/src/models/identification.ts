@@ -1,6 +1,7 @@
 // Importing client of database to connect to
 import client from '../database';
 import bcrypt from 'bcrypt'
+import { CRUDModel, Element } from './CRUDModel';
 
 export type User = {
 	id?: string | number,
@@ -28,7 +29,7 @@ const saltRounds = process.env.SALT_ROUNDS
 // Creating products's class with CRUD and addProducts functions
 export class IdentificationStore {
 
-	async login(u: User): Promise<String> {
+	async login(u: User): Promise<[String, string | number]> {
 		try {
 			const sql =
 				'SELECT * FROM users WHERE email=($1)';
@@ -38,7 +39,7 @@ export class IdentificationStore {
 			conn.release();
 
 			if (result.rows.length && bcrypt.compareSync(u.password + pepper, res.password_digest)) {
-				return res;
+				return [res, res.id];
 			}
 			else {
 				throw new Error('wrong creditencials')

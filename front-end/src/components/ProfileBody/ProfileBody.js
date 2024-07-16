@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+//import { useParams } from 'react-router-dom';
 import LeftPartTBD from './LeftPartTBD/LeftPartTBD';
 import MissionsQuicky from './MissionsQuicky/MissionsQuicky';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import Header from './Header/Header';
 import './ProfileBody.css'
 import Modal from './Modal/Modal'
-import { useEffect, useContext, useState } from 'react';
 import Post from './Post/Post';
 import TokenContext from '../../contexts/tokenContext';
 import ModalContext from '../../contexts/modalContext';
@@ -13,10 +13,12 @@ import RefreshContext from '../../contexts/refreshContext';
 import { Index } from '../../api/activity';
 import WorkInProgress from '../../common/WorkInProgress/WorkInProgress';
 
-
-
 function ProfileBody(props) {
+    // const { encodedUsername, encryptedId } = useParams(); // Get the parameters from the URL
 
+    // Decode the username and decrypt the user ID
+    // const username = decodeURIComponent(encodedUsername);
+    // const userId = atob(encryptedId); // Base64 decoding for demonstration
 
     const ctxto = useContext(TokenContext)
     const ctxre = useContext(RefreshContext)
@@ -61,7 +63,7 @@ function ProfileBody(props) {
             <div className='body1'>
                 <LeftPartTBD />
                 <div className="center" id="scrollbar1">
-                    <ProfileInfo />
+                    <ProfileInfo /> {/* username={username} userId={userId} Pass the username and userId */}
                     <div className='cPost border-radius border-shadow'>
                         <div className='newpost-container'>
                             <button className='newpost-button' onClick={()=>{setModal('createPost')}} type="button">New Post</button>

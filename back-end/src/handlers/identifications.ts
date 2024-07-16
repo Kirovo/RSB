@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 import multer from 'multer';
 import dotenv from 'dotenv';
 import { CRUDRoutes } from '../services/CRUDRoutes';
-import { Element } from '../models/CRUDModel';
+import { CRUDModel, Element } from '../models/CRUDModel';
 
 
 dotenv.config();
@@ -73,9 +73,12 @@ const login = async (req: Request, res: Response) => { // POST /login
             password: req.body.password
         }
         const identity = await store.login(user);
-        console.log(identity)
-        const token = jwt.sign({ identity }, process.env.TOKEN_SECRET as string)
-        res.json(token);
+        const userData = identity[0]
+        const profileID = identity[1]
+        const token = jwt.sign({ userData }, process.env.TOKEN_SECRET as string)
+        const profileModel = new CRUDModel(profile)
+        const profileData = await profileModel.showInDB(profileID)
+        res.json({ token, profile: profileData });
     } catch (err) {
         res.status(401)
         res.json(err)
