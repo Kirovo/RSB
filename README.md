@@ -72,7 +72,7 @@ Once everything is set up, you can run the project using the following command:
 
   *In each terminal:*
   ```bash
-  npm start
+  npm run start
   ```
   *Make sure the `back-end` is running before running the `front-end`*
 
