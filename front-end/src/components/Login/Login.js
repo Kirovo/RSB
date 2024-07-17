@@ -13,7 +13,8 @@ class Login extends React.Component {
             inputPassword: 'admin',
             err: false,
             token: undefined,
-            keepLogged: false
+            keepLogged: false,
+            url: undefined
         };
     }
 
@@ -23,10 +24,17 @@ class Login extends React.Component {
                 email: this.state.inputEmail,
                 password: this.state.inputPassword
             });
-            const { data: token } = response.token;
-            this.setState({ inputEmail: '', inputPassword: '', err: false });
+            const profile = response.data.profile;
+            const token = response.data.token;
+
+            const url = `${profile.id}`;
+
+            console.log(url);
+
             tokenContext.saveToken(token, this.state.keepLogged);
             authContext.login(this.state.keepLogged);
+            authContext.saveUrl(url);
+            
 
         } catch (error) {
             console.error('Login error:', error);
@@ -39,7 +47,7 @@ class Login extends React.Component {
             <AuthContext.Consumer>
                 {authContext => (
                     authContext.auth ? (
-                        <Navigate to="/home" replace />
+                        <Navigate to={`/${authContext.url}`} replace />
                     ) : (
                         <TokenContext.Consumer>
                             {tokenContext => (

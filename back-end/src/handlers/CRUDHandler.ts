@@ -23,6 +23,18 @@ export class CRUDHandler extends CRUDModel {
         }
     };
 
+    indexChild = async (req: Request, res: Response) => {
+        try {
+            const id_parent = req.params.id;
+            const childName = req.params.childName; // this parameter always takes an "s" at the end
+            const result = await this.model.indexChildInDB(id_parent, childName);
+            res.json(result);
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+
     show = async (req: Request, res: Response) => {
         try {
             const id = req.params.id;

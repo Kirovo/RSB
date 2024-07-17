@@ -7,6 +7,7 @@ import multer from 'multer';
 import dotenv from 'dotenv';
 import { CRUDRoutes } from '../services/CRUDRoutes';
 import { CRUDModel, Element } from '../models/CRUDModel';
+import { post } from './posts';
 
 
 dotenv.config();
@@ -32,7 +33,8 @@ const profile: Element = {
         create: true,
         update: true,
         remove: true,
-    }
+    },
+    childElements: [post]
 };
 
 
@@ -74,6 +76,7 @@ const login = async (req: Request, res: Response) => { // POST /login
         }
         const identity = await store.login(user);
         const userData = identity[0]
+        console.log(userData);
         const profileID = identity[1]
         const token = jwt.sign({ userData }, process.env.TOKEN_SECRET as string)
         const profileModel = new CRUDModel(profile)

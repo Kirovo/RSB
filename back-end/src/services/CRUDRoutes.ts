@@ -18,6 +18,7 @@ export class CRUDRoutes extends CRUDHandler {
     routes = (): void => {
         this.app.get(`/${this.element.name}s`, this.indexMiddleware, this.handler.index);
         this.app.get(`/${this.element.name}/:id`, this.showMiddleware, this.handler.show);
+        this.app.get(`/${this.element.name}/:id/:childName`, this.showMiddleware, this.handler.indexChild);
         this.app.post(`/${this.element.name}`, this.createMiddleware, this.handler.create);
         this.app.put(`/${this.element.name}/:id`, this.updateMiddleware, this.handler.update);
         this.app.delete(`/${this.element.name}/:id`, this.removeMiddleware, this.handler.remove);

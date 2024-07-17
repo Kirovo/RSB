@@ -14,19 +14,28 @@ function App() {
   const [auth, setAuth] = useState(JSON.parse(window.localStorage.getItem('auth')))
   const [token, setToken] = useState(JSON.parse(window.localStorage.getItem('token')))
   const [refresh, setRefresh] = useState(false)
+  const [url, setUrl] = useState(null)
+
+  const getProfileUrl = (url) => {
+    setUrl(url)
+  }
 
   return (
     <AuthContext.Provider value={{
       auth: auth,
+      url: url,
       login: (keepLogged) => {
         setAuth(true)
         if (keepLogged)
           window.localStorage.setItem('auth', 'true')
       },
+      saveUrl: (newUrl) => {
+        console.log(newUrl);
+        getProfileUrl(newUrl)
+      },
       logout: () => {
         setAuth(false)
         window.localStorage.setItem('auth', 'false')
-
       }
     }}>
 
@@ -47,14 +56,11 @@ function App() {
               <Routes>
                 <Route exact path='/'
                   element={
-                    auth ? (<Navigate push to="/home" />) : (<Login />)} />
+                    auth ? (<Navigate push to={`/${url}`} />) : (<Login onUrl={getProfileUrl} />)} />
                 <Route path='/register'
                   element={
-                    auth ? (<Navigate push to="/home" />) : (<Register />)} />
-                <Route path='/home'
-                  element={
-                    auth ? (<ProfileBody />) : (<Navigate push to="/" />)} />
-                <Route path='/users/:encodedUsername-:encryptedId'
+                    auth ? (<Navigate push to={`/${url}`} />) : (<Register />)} />
+                <Route path={`/:profileid`}
                   element={
                     auth ? (<ProfileBody />) : (<Navigate push to="/" />)} /> {/* New route for user profiles */}
               </Routes>
