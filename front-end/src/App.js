@@ -11,61 +11,60 @@ import RefreshContext from './contexts/refreshContext';
 
 function App() {
 
-  const [auth, setAuth] = useState(JSON.parse(window.localStorage.getItem('auth')))
-  const [token, setToken] = useState(JSON.parse(window.localStorage.getItem('token')))
+  const [auth, setAuth] = useState(window.localStorage.getItem('auth'))
+  const [token, setToken] = useState(window.localStorage.getItem('token'))
   const [refresh, setRefresh] = useState(false)
-  const [url, setUrl] = useState(null)
+  const [url, setUrl] = useState('null')
 
-  const getProfileUrl = (url) => {
-    setUrl(url)
-  }
 
+  
   return (
     <AuthContext.Provider value={{
       auth: auth,
       url: url,
-      login: (keepLogged) => {
+      login: (keepLogged, url) => {
         setAuth(true)
-        if (keepLogged)
-          window.localStorage.setItem('auth', 'true')
-      },
-      saveUrl: (newUrl) => {
-        console.log(newUrl);
-        getProfileUrl(newUrl)
+        console.log('setAuth')
+        setUrl(url)
+        console.log('setUrl', url)
+        //if (keepLogged)
+        window.localStorage.setItem('auth', 'true')
       },
       logout: () => {
-        setAuth(false)
         window.localStorage.setItem('auth', 'false')
+        setAuth(false)
       }
     }}>
-
       <TokenContext.Provider value={{
         token: token,
         saveToken: (newtoken, keepLogged) => {
           setToken(newtoken)
-          if (keepLogged)
-            window.localStorage.setItem('token', JSON.stringify(newtoken))
+          window.localStorage.setItem('token', newtoken)
         }
       }}>
         <RefreshContext.Provider value={{
           refresh: refresh,
           Refresh: () => { (refresh === false) ? setRefresh(true) : (setRefresh(false)) },
         }}>
-          <Router>
-            <div className="App">
-              <Routes>
-                <Route exact path='/'
-                  element={
-                    auth ? (<Navigate push to={`/${url}`} />) : (<Login onUrl={getProfileUrl} />)} />
-                <Route path='/register'
-                  element={
-                    auth ? (<Navigate push to={`/${url}`} />) : (<Register />)} />
-                <Route path={`/:profileid`}
-                  element={
-                    auth ? (<ProfileBody />) : (<Navigate push to="/" />)} /> {/* New route for user profiles */}
-              </Routes>
-            </div>
-          </Router>
+          <AuthContext.Consumer>
+            {(authContext) => (
+              <Router>
+                {console.log('auth', authContext.auth)}
+                {console.log('url', authContext.url)}
+                <div className="App">
+                    <Routes>
+                      <Route path={`/:profileid`}
+                        element={authContext.auth ? (<ProfileBody />) : (<Navigate to={`/`} />)} />
+                      <Route path='/register'
+                        element={<Register />} />
+                      <Route exact path='/'
+                        element={
+                          (authContext.url !== 'null') ? (authContext.auth ? (<Navigate to={`/${authContext.url}`} />) : (<Login />)) : (<Login />)} />
+                    </Routes>
+                </div>
+              </Router>
+            )}
+          </AuthContext.Consumer>
         </RefreshContext.Provider>
       </TokenContext.Provider>
     </AuthContext.Provider>
