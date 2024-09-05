@@ -15,9 +15,9 @@ const tokenToUser = (token: string, res: Response): void => {
 			)
 
 		// Assign request's local variables to be used in the asked request
-		res.locals.id = userCredentials.identity.id
-		res.locals.email = userCredentials.identity.email
-		res.locals.password_digest = userCredentials.identity.password_digest
+		res.locals.id = userCredentials.userData.id
+		res.locals.email = userCredentials.userData.email
+		res.locals.password_digest = userCredentials.userData.password_digest
 
 	} catch {
 

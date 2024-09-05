@@ -3,12 +3,12 @@ import client from '../database';
 
 export type Element = {
 	name: string; // In lowercase, used as endpoint
-	secure: {
-		index: boolean;
-		show: boolean;
-		create: boolean;
-		update: boolean;
-		remove: boolean;
+	CRUDOperation: {
+		index?: {security: string};
+		show?: {security: string};
+		create?: {security: string};
+		update?: {security: string};
+		remove?: {security: string};
 	},
 	childElements?: Element[];
 }
@@ -19,6 +19,8 @@ export class CRUDModel {
 	constructor(element: Element) {
 		this.element = element;
 	}
+
+
 	indexInDB: () => Promise<any> = async () => {
 
 		try {
@@ -34,17 +36,61 @@ export class CRUDModel {
 		}
 	}
 
-	indexChildInDB: (id: string | number, childName: string) => Promise<any> = async (id: string | number, childName: string) => {
+	showInDB: (id: string | number) => Promise<any> = async (id: string | number) => {
+		const fetchChildElements: (conn: any, element: Element, id: string | number) => Promise<any> = async (conn: any, element: Element, id: string | number) => {
+			if (element.childElements) {
+				let results = {};
+				for (const childElement of element.childElements) {
+
+					const sql = `SELECT * FROM ${childElement.name}s WHERE id_${element.name}=($1) ORDER BY id DESC;`;
+					const result = await conn.query(sql, [id]);
+					// Recursively fetch sub-elements of sub-elements
+					const subresult = []
+					for (const row of result.rows) {
+						const childResults = await fetchChildElements(conn, childElement, row.id);
+						subresult.push({ ...row, ...childResults });
+					}
+					results = { ...results, [childElement.name]: subresult };
+					// Fetch the current sub-element
+
+				}
+				return results;
+			}
+			return {};
+		};
+
+		try {
+			if (id === 'null' || id === 'undefined') {
+				return {};
+			}
+			const conn = await client.connect();
+			const sql = `SELECT * FROM ${this.element.name}s WHERE id=($1);`;
+			const result = await conn.query(sql, [id]);
+			if (result.rows.length === 0) {
+				throw new Error(`No ${this.element.name} found with ID ${id}`);
+			}
+			const parentObject = result.rows[0]
+			const childObjects = await fetchChildElements(conn, this.element, id);
+			conn.release();
+			return { [this.element.name]: { ...parentObject, ...childObjects } };
+		} catch (err) {
+			const error = new Error(`Could not find ${this.element.name} ${id}. Error: ${err}`);
+			console.log(error)
+			throw error;
+		}
+	}
+
+	showChildInDB: (id: string | number, childName: string) => Promise<any> = async (id: string | number, childName: string) => {
 		try {
 			if (this.element.childElements) {
 
-					const sql = `SELECT * FROM ${childName} WHERE id_${this.element.name}=($1) ORDER BY ${childName}.id DESC;`;
-					const conn = await client.connect();
-					const result = await conn.query(sql, [id]);
-					conn.release();
+				const sql = `SELECT * FROM ${childName} WHERE id_${this.element.name}=($1) ORDER BY ${childName}.id DESC;`;
+				const conn = await client.connect();
+				const result = await conn.query(sql, [id]);
+				conn.release();
 				return result.rows;
 			}
-			
+
 			else {
 				throw new Error(`No child elements for ${this.element.name}`);
 			}
@@ -54,27 +100,6 @@ export class CRUDModel {
 		}
 	}
 
-	showInDB: (id: string | number) => Promise<any> = async (id: string | number) => {
-
-		try {
-			if (this.element.childElements) {
-				const results = [];
-				for (const childElement of this.element.childElements) {
-					const sql = `SELECT * FROM ${childElement.name}s WHERE id_${this.element.name}=($1);`;
-					const conn = await client.connect();
-					const result = await conn.query(sql, [id]);
-					conn.release();
-					results.push({ [childElement.name]: result.rows });
-				}
-				return results;
-			}
-			else {
-				throw new Error(`No child elements for ${this.element.name}`);
-			}
-		} catch (err) {
-			throw new Error(`Could not find ${this.element.name} ${id}. Error: ${err}`);
-		}
-	}
 
 	createInDB: (body: any) => Promise<any> = async (body: any) => {
 		try {
@@ -108,7 +133,6 @@ export class CRUDModel {
 	removeInDB: (id: string | number) => Promise<any> = async (id: string | number) => {
 		const deletechildElements = async (conn: any, element: Element, id: string | number) => {
 			if (element.childElements) {
-				console.log(element.childElements)
 				for (const childElement of element.childElements) {
 					// Recursively delete sub-elements of sub-elements
 					await deletechildElements(conn, childElement, id);
@@ -163,6 +187,3 @@ export class CRUDModel {
 
 
 }
-
-
-

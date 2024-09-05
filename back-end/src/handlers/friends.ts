@@ -5,21 +5,21 @@ import { Element } from '../models/CRUDModel';
 
 
 
-export const comment: Element = {
-	name: 'comment',
+export const friend: Element = {
+	name: 'friend',
 	CRUDOperation: {
 		index: {security: 'user'},
 		show: {security: 'user'},
-		create: {security: 'user'},
+		create: {security: ''},
 		update: {security: 'user'},
-		remove: {security: 'user'},
+		remove: {security: 'user'}
 	}
 };
 
 // Building endpoints
-const commentRoutes = (app: express.Application): void => {
-	 new CRUDRoutes(comment, app)
+const friendRoutes = (app: express.Application): void => {
+	new CRUDRoutes(friend, app)
 };
 
 // Allowing routes to be called
-export default commentRoutes;
+export default friendRoutes;

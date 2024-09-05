@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import { CRUDRoutes } from '../services/CRUDRoutes';
 import { CRUDModel, Element } from '../models/CRUDModel';
 import { post } from './posts';
+import { friend } from './friends';
 
 
 dotenv.config();
@@ -16,25 +17,25 @@ const upload = multer();
 
 const user: Element = {
     name: 'user',
-    secure: {
-        index: true,
-        show: true,
-        create: true,
-        update: true,
-        remove: true,
+    CRUDOperation: {
+        index: {security: 'user'},
+        show: {security: 'user'},
+        create: {security: 'public'},
+        update: {security: 'user'},
+        remove: {security: 'user'}
     }
 };
 
 const profile: Element = {
     name: 'profile',
-    secure: {
-        index: false,
-        show: false,
-        create: true,
-        update: true,
-        remove: true,
+    CRUDOperation: {
+        index: {security: 'user'},
+        show: {security: 'friend'},
+        create: {security: 'public'},
+        update: {security: 'user'},
+        remove: {security: 'user'}
     },
-    childElements: [post]
+    childElements: [post, friend]
 };
 
 
@@ -76,7 +77,6 @@ const login = async (req: Request, res: Response) => { // POST /login
         }
         const identity = await store.login(user);
         const userData = identity[0]
-        console.log(userData);
         const profileID = identity[1]
         const token = jwt.sign({ userData }, process.env.TOKEN_SECRET as string)
         const profileModel = new CRUDModel(profile)

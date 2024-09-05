@@ -22,6 +22,7 @@ SET row_security = off;
 
 COPY public.users (id, email, password_digest) FROM stdin;
 1	admin@admin.com	$2b$05$OxNYOi/HoPk8Q2vuQfecR.QYgRRT7NyeH4v.7dyc82KkUC87aC78m
+2	francois	$2b$05$/2G1eYANdqwkIr0vJcv2sel8MHLacNKxxcfd7TEic4hI21j1YeH7u
 \.
 
 
@@ -31,6 +32,7 @@ COPY public.users (id, email, password_digest) FROM stdin;
 
 COPY public.profiles (id, id_user, firstname, lastname, mobile, birthdate, gendre, address, city, postalcode) FROM stdin;
 1	1	admin	admin	0123456789	12/12/12	Male	01 admin	Admin	01234
+2	2	François	WERYHA				Kazimierza Jeżewskiego 7	Warszawa	02-796
 \.
 
 
@@ -51,6 +53,7 @@ COPY public.posts (id, id_profile, topic) FROM stdin;
 10	1	This project is still in development, and probably will not be finished anytime soon. For now it consists more of a playground for me to practice diverse skills of the Fullstack world. I want to keep it basic and focused on important aspects like security, scalability and clarity.
 11	1	The concept of this project is to be a facebook-like social network for everyday volunteers to find their missions and their communities.
 12	1	Welcome and thank you for cloning this project. I hope it wasn’t too difficult to launch it on your device. In any case feel free to share your feedback. It will help a lot! :D
+13	2	Francois
 \.
 
 
@@ -83,6 +86,14 @@ COPY public.comments (id, id_post, id_profile, content) FROM stdin;
 
 
 --
+-- Data for Name: friends; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.friends (id, id_profile, id_friend) FROM stdin;
+\.
+
+
+--
 -- Data for Name: reactions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -105,6 +116,13 @@ SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 
 
 --
+-- Name: friends_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.friends_id_seq', 1, false);
+
+
+--
 -- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -115,14 +133,14 @@ SELECT pg_catalog.setval('public.migrations_id_seq', 8, true);
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 12, true);
+SELECT pg_catalog.setval('public.posts_id_seq', 13, true);
 
 
 --
 -- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.profiles_id_seq', 1, true);
+SELECT pg_catalog.setval('public.profiles_id_seq', 2, true);
 
 
 --
@@ -136,7 +154,7 @@ SELECT pg_catalog.setval('public.reactions_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --

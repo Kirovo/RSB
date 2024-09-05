@@ -7,12 +7,12 @@ import { Reaction, ReactionStore } from '../models/reaction';
 
 export const reaction: Element = {
 	name: 'reaction',
-	secure: {
-		index: false,
-		show: false,
-		create: true,
-		update: true,
-		remove: true,
+	CRUDOperation: {
+		index: {security: 'user'},
+		show: {security: 'user'},
+		create: {security: 'user'},
+		update: {security: 'user'},
+		remove: {security: 'user'}
 	}
 };
 
@@ -37,8 +37,6 @@ const triggerReaction = async (req: Request, res: Response) => {
 			id_post: req.body.id_post,
 			id_profile: res.locals.id // id_profile from userAccreditation middleware
 		}
-		console.log(reaction)
-
 		const reactions = await store.triggerReaction(reaction);
 		res.json(reactions);
 

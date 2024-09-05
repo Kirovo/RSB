@@ -79,3 +79,12 @@ CREATE TABLE reactions (
 );
 
 
+CREATE TABLE friends (
+    id SERIAL PRIMARY KEY,
+    id_profile INT,
+    id_friend INT,
+    FOREIGN KEY(id_profile) REFERENCES profiles(id),
+    FOREIGN KEY(id_friend) REFERENCES profiles(id),
+    CONSTRAINT check_id_profile_id_friend CHECK (id_profile <> id_friend)
+    -- date
+);

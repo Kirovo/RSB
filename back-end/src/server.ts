@@ -11,6 +11,7 @@ import identificationRoutes from './handlers/identifications';
 import commentRoutes from './handlers/comments';
 import reactionRoutes from './handlers/reactions';
 import attachmentRoutes from './handlers/attachments';
+import friendRoutes from './handlers/friends';
 // import dashboardRoutes from './handlers/dashboards';
 
 // Listenning to the app to endpoints
@@ -28,7 +29,7 @@ postRoutes(app)
 commentRoutes(app)
 reactionRoutes(app)
 identificationRoutes(app)
-
+friendRoutes(app)
 
 // Launching the app on localhost:2000
 app.listen(port, function () {

@@ -22,12 +22,12 @@ const storage = multer.diskStorage({
 
 export const attachment: Element = {
 	name: 'attachment',
-	secure: {
-		index: true,
-		show: true,
-		create: true,
-		update: true,
-		remove: true
+	CRUDOperation: {
+		index: {security: 'user'},
+		show: {security: 'user'},
+		create: {security: 'user'},
+		update: {security: 'user'},
+		remove: {security: 'user'}
 	}
 }
 

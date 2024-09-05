@@ -4,7 +4,7 @@ import tokenVerifier from '../services/userAccreditationService/tokenVerifier';
 import tokenToUser from '../services/userAccreditationService/tokenToUser';
 
 // This middleware verifies if the user is allowed to make the request he/she asked and saves his/her credentials localy
-const userAccreditation = (req: Request, res: Response, next: NextFunction): void => {
+const userAccreditation = (req: Request, res: Response, next?: NextFunction): void => {
 
 	
 	
@@ -19,8 +19,10 @@ const userAccreditation = (req: Request, res: Response, next: NextFunction): voi
 		// retreive user credentials from the given token and save them localy
 		tokenToUser(token,res)
 
+		if(next) next()
 
-		next();
+
+		
 
 	} catch (err) {
 		const mistake = `Access to this request have been denied : `

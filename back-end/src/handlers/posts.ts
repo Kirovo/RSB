@@ -8,12 +8,12 @@ import { attachment } from './attachments';
 
 export const post: Element = {
 	name: 'post',
-	secure: {
-		index: false,
-		show: false,
-		create: true,
-		update: true,
-		remove: true,
+	CRUDOperation: {
+		index: {security: 'user'},
+		show: {security: 'user'},
+		create: {security: 'user'},
+		update: {security: 'user'},
+		remove: {security: 'user'}
 	},
 	childElements: [
 		comment, 

@@ -1,7 +1,6 @@
 // Importing client of database to connect to
 import client from '../database';
 import bcrypt from 'bcrypt'
-import { CRUDModel, Element } from './CRUDModel';
 
 export type User = {
 	id?: string | number,
@@ -70,25 +69,4 @@ export class IdentificationStore {
 			throw new Error(`unable create post: ${err}`);
 		}
 	}
-
-
-	// Method to delete a user by ID
-	// async remove(id: string | number): Promise<null> {
-	//     try {
-	// 		const sql1 = 'DELETE FROM profiles WHERE id=($1) RETURNING (id_user)';
-	//         const sql2 = 'DELETE FROM users WHERE id=($1)';
-	//         const conn = await client.connect();
-	//         const result = await conn.query(sql1, [id]);
-	// 		await conn.query(sql2, [result.rows[0].id_user]);
-	//         conn.release();
-
-	//         return null;
-
-	//     } catch (err) {
-	//         throw new Error(`Could not delete user ${id}. Error: ${err}`);
-	//     }
-	// }
-
-
-
 }
