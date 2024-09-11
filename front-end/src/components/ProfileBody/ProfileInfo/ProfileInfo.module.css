@@ -6,6 +6,27 @@
 }
 
 
+.fullname {
+    font-family:  'Orienta', sans-serif; font-weight: normal;
+    letter-spacing: -5px;
+    word-spacing: 15px;
+    color: white;
+    -webkit-text-stroke: 1px rgb(88, 88, 165);
+    font-size: 50px;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@container sidebar (min-width: 700px) {
+    .fullname {
+        font-size: 2em;
+    }
+}
+
 .blockinfo{
     position : absolute;
     border: black 5px dashed;
@@ -19,7 +40,7 @@
 
 
 .pPicture {
-    position : absolute;
+    position : relative;
     left : 5%;
     bottom: 25px;
     height : 150px;

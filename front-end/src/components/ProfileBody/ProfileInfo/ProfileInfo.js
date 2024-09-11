@@ -12,6 +12,7 @@ function ProfileInfo() {
             <div className={styles.bgPicture}>
                 <img className={styles.image} src="tree-736885__480.jpg" alt="backgroundImage"></img>
                 <div className={styles.profile_container}>
+                <div className={styles.fullname}>François Weryha</div>
                     <div className={styles.pPicture}>
                         <input className={styles.cover2} />
                         <img className={styles.profile} src="work-in-progress.jpg" alt="profileImage"></img>
