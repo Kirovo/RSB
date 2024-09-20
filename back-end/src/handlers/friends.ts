@@ -8,11 +8,11 @@ import { Element } from '../models/CRUDModel';
 export const friend: Element = {
 	name: 'friend',
 	CRUDOperation: {
-		index: {security: 'user'},
-		show: {security: 'user'},
-		create: {security: ''},
-		update: {security: 'user'},
-		remove: {security: 'user'}
+		index: {security: 'public'},
+		show: {security: 'public'},
+		create: {security: 'public'},
+		update: {security: 'public'},
+		remove: {security: 'public'}
 	}
 };
 

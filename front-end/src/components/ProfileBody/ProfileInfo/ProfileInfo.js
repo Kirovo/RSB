@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ProfileInfo.module.css'
 
 
-function ProfileInfo() {
+function ProfileInfo(props) {
 
 
 
@@ -12,7 +12,7 @@ function ProfileInfo() {
             <div className={styles.bgPicture}>
                 <img className={styles.image} src="tree-736885__480.jpg" alt="backgroundImage"></img>
                 <div className={styles.profile_container}>
-                <div className={styles.fullname}>François Weryha</div>
+                <div className={styles.fullname}>{props.profile.firstname} {props.profile.lastname}</div>
                     <div className={styles.pPicture}>
                         <input className={styles.cover2} />
                         <img className={styles.profile} src="work-in-progress.jpg" alt="profileImage"></img>

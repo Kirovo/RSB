@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useCallback } from 'react';
 //import { useParams } from 'react-router-dom';
 import LeftPartTBD from './LeftPartTBD/LeftPartTBD';
-import MissionsQuicky from './MissionsQuicky/MissionsQuicky';
+import RightPartTBD from './RightPartTBD/RightPartTBD'
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import Header from './Header/Header';
 import './ProfileBody.css'
@@ -30,6 +30,7 @@ function ProfileBody() {
     const [modal, setModal] = useState(undefined)
     const [error, setError] = useState(false)
     const [posts, setPosts] = useState([])
+    const [profile, setProfile] = useState([])
 
     const indexElements = useCallback(async () => {
         try{
@@ -38,6 +39,7 @@ function ProfileBody() {
         const post = profile[0].post;
         console.log('profile', profile)
         setPosts(post);
+        setProfile(profile[0]);
         }
         catch(error){
             setError(true)
@@ -46,7 +48,6 @@ function ProfileBody() {
 
     useEffect(() => {
         indexElements();
-        console.log('useEffect')
     }, [indexElements,ctxre.refresh]);
 
     if (!error){
@@ -64,7 +65,7 @@ function ProfileBody() {
                 <div className='body1'>
                     <LeftPartTBD />
                     <div className="center" id="scrollbar1">
-                        <ProfileInfo /> {/* username={username} userId={userId} Pass the username and userId */}
+                        <ProfileInfo profile={profile} /> {/* username={username} userId={userId} Pass the username and userId */}
                         <div className='cPost border-radius border-shadow'>
                             <div className='newpost-container'>
                                 <button className='newpost-button' onClick={() => { setModal('createPost') }} type="button">New Post</button>
@@ -80,7 +81,7 @@ function ProfileBody() {
 
                         )}
                     </div>
-                    <MissionsQuicky />
+                    <RightPartTBD profile={profile} />
                 </div>
             </div>
         </ModalContext.Provider>    

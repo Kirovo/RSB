@@ -29,8 +29,8 @@ const user: Element = {
 const profile: Element = {
     name: 'profile',
     CRUDOperation: {
-        index: {security: 'user'},
-        show: {security: 'friend'},
+        index: {security: 'public'},
+        show: {security: 'friends'},
         create: {security: 'public'},
         update: {security: 'user'},
         remove: {security: 'user'}

@@ -9,7 +9,7 @@ function Register() {
     const [email, setEmail]= useState('')  
     const [mobile, setMobile]= useState('')  
     const [birthdate, setBirthdate]= useState('')  
-    const [gendre, setGendre]= useState('')  
+    const [gender, setGendre]= useState('')  
     const [address, setAddress]= useState('')  
     const [city, setCity]= useState('')  
     const [postalcode, setPostalcode]= useState('')  
@@ -35,8 +35,8 @@ function Register() {
                 <input onChange={e=>setMobile(e.target.value)} value={mobile} name='mobile' placeholder='Mobile phone'></input>
                 <label>Birth date</label>
                 <input onChange={e=>setBirthdate(e.target.value)} value={birthdate} name='birthdate' placeholder='Birth date'></input>
-                <label>Gendre</label>
-                <input onChange={e=>setGendre(e.target.value)} value={gendre} name='gendre' placeholder='Gendre'></input>
+                <label>Gender</label>
+                <input onChange={e=>setGendre(e.target.value)} value={gender} name='gender' placeholder='Gendre'></input>
                 <label>Address</label>
                 <input onChange={e=>setAddress(e.target.value)} value={address} name='address' placeholder='Address'></input>
                 <label>City</label>
@@ -47,7 +47,7 @@ function Register() {
                 <input onChange={e=>setPassword(e.target.value)} value={password} name='password' placeholder='Password'></input>
                 <label>Confirm Password</label>
                 <input placeholder='Confirm Password' ></input>
-                <button>Submit</button>
+                <button id='submit'>Submit</button>
             </form>
         </div>
     )

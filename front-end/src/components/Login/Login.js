@@ -6,8 +6,8 @@ import TokenContext from '../../contexts/tokenContext';
 import AuthContext from '../../contexts/authContext';
 
 const Login = () => {
-    const [inputEmail, setInputEmail] = useState('admin@admin.com');
-    const [inputPassword, setInputPassword] = useState('admin');
+    const [inputEmail, setInputEmail] = useState('');
+    const [inputPassword, setInputPassword] = useState('');
     const [err, setErr] = useState(false);
     const [keepLogged, setKeepLogged] = useState(false);
 
@@ -48,16 +48,16 @@ const Login = () => {
                 <div className="formular">
                     <h2>Sign In</h2>
                     {err && <div className="errMessage">Authentication error: Wrong credentials</div>}
-                    <input placeholder="Email" value={inputEmail} onChange={e => setInputEmail(e.target.value)} />
-                    <input type='password' placeholder="Password" value={inputPassword} onChange={e => setInputPassword(e.target.value)} />
+                    <input id='email' placeholder="Email" value={inputEmail} onChange={e => setInputEmail(e.target.value)} />
+                    <input id='password' type='password' placeholder="Password" value={inputPassword} onChange={e => setInputPassword(e.target.value)} />
                     <div className="rememberCheckbox form-check form-switch">
                         <input className="form-check-input" type='checkbox' checked={keepLogged} onChange={e => setKeepLogged(e.target.checked)} />
                         <label className="form-check-label">Remember me</label>
                     </div>
-                    <button onClick={async () => await logging()}>Next</button>
+                    <button id='login' onClick={async () => await logging()}>Next</button>
                     <nav>
-                        <Link to='/forgot-password'>Forgot password?</Link>
-                        <Link to='/register'>Register now!</Link>
+                        <Link to='/forgot-password' id='forgot-password'>Forgot password?</Link>
+                        <Link to='/register' id='register'>Register now!</Link>
                     </nav>
                 </div>
             </div>
