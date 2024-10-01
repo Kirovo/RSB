@@ -23,7 +23,7 @@ CREATE TABLE users (
 CREATE TABLE profiles (
     id SERIAL PRIMARY KEY,
     id_user INT,
-    FOREIGN KEY (id_user) REFERENCES users(id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
     firstname VARCHAR(63),
     lastname VARCHAR(63),
     mobile VARCHAR(15),
@@ -39,7 +39,7 @@ CREATE TABLE profiles (
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY, 
     id_profile INT,
-    FOREIGN KEY (id_profile) REFERENCES profiles(id),
+    FOREIGN KEY (id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
     topic VARCHAR(2500)
     -- date
 );
@@ -49,8 +49,8 @@ CREATE TABLE attachments (
     id SERIAL PRIMARY KEY,
     id_profile INT,
     id_post INT,
-    FOREIGN KEY(id_profile) REFERENCES profiles(id),
-    FOREIGN KEY(id_post) REFERENCES posts(id),
+    FOREIGN KEY(id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_post) REFERENCES posts(id) ON DELETE CASCADE,
     path VARCHAR(255),
     filename VARCHAR(127),
     mime VARCHAR(15)
@@ -62,8 +62,8 @@ CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     id_post INT,
     id_profile INT,
-    FOREIGN KEY(id_profile) REFERENCES profiles(id),
-    FOREIGN KEY(id_post) REFERENCES posts(id),
+    FOREIGN KEY(id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_post) REFERENCES posts(id) ON DELETE CASCADE,
     content VARCHAR(1500)
     -- date
 );
@@ -73,18 +73,20 @@ CREATE TABLE reactions (
     id SERIAL PRIMARY KEY,
     id_post INT,
     id_profile INT,
-    FOREIGN KEY(id_profile) REFERENCES profiles(id),
-    FOREIGN KEY(id_post) REFERENCES posts(id)
+    FOREIGN KEY(id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_post) REFERENCES posts(id) ON DELETE CASCADE
     -- date
 );
 
+CREATE TYPE status AS ENUM ('request', 'friends');
 
 CREATE TABLE friends (
     id SERIAL PRIMARY KEY,
     id_profile INT,
     id_friend INT,
-    FOREIGN KEY(id_profile) REFERENCES profiles(id),
-    FOREIGN KEY(id_friend) REFERENCES profiles(id),
+    status status,
+    FOREIGN KEY(id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY(id_friend) REFERENCES profiles(id) ON DELETE CASCADE,
     CONSTRAINT check_id_profile_id_friend CHECK (id_profile <> id_friend)
     -- date
 );

@@ -1,7 +1,5 @@
 // Importing client of database to connect to
 import client from '../database';
-import { CRUDModelError } from '../errors/CRUDError';
-import { ActivityAction, CRUDSenario } from "../types/CRUDSenarioType";
 
 
 
@@ -18,10 +16,7 @@ export type Attachment = {
 // Creating products's class with CRUD and addProducts functions
 export class AttachmentStore {
 
-	public CRUDSenario: CRUDSenario = {
-		crud: undefined,
-		activityAction: ActivityAction.Attachment
-	}
+
 
 	async index(): Promise<Attachment[]> {
 
@@ -35,9 +30,9 @@ export class AttachmentStore {
 
 			return result.rows;
 		}
-		catch {
+		catch (err) {
 
-			throw new CRUDModelError(this.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 
@@ -55,7 +50,7 @@ export class AttachmentStore {
 		} 
 		catch (err) {
 
-			throw new CRUDModelError(this.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 
@@ -73,7 +68,7 @@ export class AttachmentStore {
 		}
 		catch (err) {
 
-			throw new CRUDModelError(this.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 	async fileReader(id: string | number): Promise<Attachment> {

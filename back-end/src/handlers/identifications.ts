@@ -15,16 +15,7 @@ dotenv.config();
 
 const upload = multer();
 
-const user: Element = {
-    name: 'user',
-    CRUDOperation: {
-        index: {security: 'user'},
-        show: {security: 'user'},
-        create: {security: 'public'},
-        update: {security: 'user'},
-        remove: {security: 'user'}
-    }
-};
+
 
 const profile: Element = {
     name: 'profile',
@@ -33,9 +24,22 @@ const profile: Element = {
         show: {security: 'friends'},
         create: {security: 'public'},
         update: {security: 'user'},
-        remove: {security: 'user'}
+        remove: {security: 'public'}
     },
     childElements: [post, friend]
+};
+
+
+const user: Element = {
+    name: 'user',
+    CRUDOperation: {
+        index: {security: 'public'},
+        show: {security: 'user'},
+        create: {security: 'public'},
+        update: {security: 'user'},
+        remove: {security: 'public'}
+    },
+    childElements: [profile]
 };
 
 

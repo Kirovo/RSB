@@ -131,24 +131,13 @@ export class CRUDModel {
 	}
 
 	removeInDB: (id: string | number) => Promise<any> = async (id: string | number) => {
-		const deletechildElements = async (conn: any, element: Element, id: string | number) => {
-			if (element.childElements) {
-				for (const childElement of element.childElements) {
-					// Recursively delete sub-elements of sub-elements
-					await deletechildElements(conn, childElement, id);
 
-					// Delete the current sub-element
-					const sql = `DELETE FROM ${childElement.name}s WHERE id_${element.name}=($1) RETURNING *;`;
-					await conn.query(sql, [id]);
-				}
-			}
-		};
 
 		try {
 			const conn = await client.connect();
 
 			// Recursively delete all sub-elements
-			await deletechildElements(conn, this.element, id);
+			//await deletechildElements(conn, this.element, id);
 
 			// Delete the main element
 			const sql = `DELETE FROM ${this.element.name}s WHERE id=($1) RETURNING *;`;

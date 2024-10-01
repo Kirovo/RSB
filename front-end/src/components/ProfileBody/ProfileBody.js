@@ -7,13 +7,12 @@ import Header from './Header/Header';
 import './ProfileBody.css'
 import Modal from './Modal/Modal'
 import Post from './Post/Post';
-import TokenContext from '../../contexts/tokenContext';
 import ModalContext from '../../contexts/modalContext';
 import RefreshContext from '../../contexts/refreshContext';
 import { Show } from '../../api/activity';
 import WorkInProgress from '../../common/WorkInProgress/WorkInProgress';
 import { useParams } from 'react-router-dom';
-
+import AuthContext from '../../contexts/authContext';
 function ProfileBody() {
     // const { encodedUsername, encryptedId } = useParams(); // Get the parameters from the URL
 
@@ -24,7 +23,7 @@ function ProfileBody() {
     const { profileid } = useParams()
     console.log('useParams', profileid)
 
-    const ctxto = useContext(TokenContext)
+    const ctxau = useContext(AuthContext)
     const ctxre = useContext(RefreshContext)
 
     const [modal, setModal] = useState(undefined)
@@ -34,8 +33,8 @@ function ProfileBody() {
 
     const indexElements = useCallback(async () => {
         try{
-        console.log('token', ctxto.token)
-        const profile = await Show('profile', profileid, ctxto.token);
+        console.log('token', ctxau.token)
+        const profile = await Show('profile', profileid, ctxau.token);
         const post = profile[0].post;
         console.log('profile', profile)
         setPosts(post);
@@ -44,7 +43,7 @@ function ProfileBody() {
         catch(error){
             setError(true)
         }
-    }, [ctxto.token, profileid]);
+    }, [ctxau.token, profileid]);
 
     useEffect(() => {
         indexElements();
@@ -68,19 +67,20 @@ function ProfileBody() {
                         <ProfileInfo profile={profile} /> {/* username={username} userId={userId} Pass the username and userId */}
                         <div className='cPost border-radius border-shadow'>
                             <div className='newpost-container'>
-                                <button className='newpost-button' onClick={() => { setModal('createPost') }} type="button">New Post</button>
+                                <button id='create-post' className='newpost-button' onClick={() => { setModal('createPost') }} type="button">New Post</button>
                             </div>
                             <WorkInProgress />
                         </div>
                         {posts ? (
                             posts.map((post, index) => (
-                                <Post key={index} token={ctxto.token} post={post} comments={post.comment} reactions={post.reaction} />
+                                <Post key={index} token={ctxau.token} post={post} comments={post.comment} reactions={post.reaction} />
                             ))
                         ) : (
                             <>No posts</>
 
                         )}
                     </div>
+                    {console.log('profile', profile)}
                     <RightPartTBD profile={profile} />
                 </div>
             </div>

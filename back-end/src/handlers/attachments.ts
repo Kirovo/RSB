@@ -2,9 +2,6 @@
 import express, { Request, Response } from 'express';
 import { Attachment, AttachmentStore } from '../models/attachment';
 import userAccreditation from '../utilities/userAccreditation';
-import { CRUD } from "../types/CRUDSenarioType";
-import { errorDisplayer } from '../services/errorDisplayer';
-import { CRUDHandlerError } from '../errors/CRUDError';
 import multer from 'multer';
 import path from 'path';
 import { promises as fsPromises } from 'fs'
@@ -51,21 +48,20 @@ const index = async (_req: Request, res: Response) => {
 	try {
 
 		try {
-			store.CRUDSenario.crud = CRUD.Index
 
 			const allActivityAttachments = await store.index();
 
 			res.status(200);
 			res.json(allActivityAttachments);
 		}
-		catch {
+		catch (err) {
 
-			throw new CRUDHandlerError(store.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err, res)
+		
 	}
 };
 
@@ -84,21 +80,20 @@ const create = async (req: Request, res: Response) => {
 				mime: req.file?.mimetype,
 			}
 
-			store.CRUDSenario.crud = CRUD.Create
 
 			const NewAttachment = await store.create(attachment);
 
 			res.status(205);
 			res.json(NewAttachment);
 		}
-		catch {
+		catch (err) {
 
-			throw new CRUDHandlerError(store.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err, res)
+		throw new Error(`unable get posts: ${err}`);
 	}
 };
 
@@ -122,12 +117,12 @@ const remove = async (req: Request, res: Response) => {
 		}
 		catch (err) {
 
-			throw new CRUDHandlerError(store.CRUDSenario)
+			throw new Error(`unable get posts: ${err}`);
 		}
 	}
 	catch (err) {
 
-		errorDisplayer(err, res)
+		throw new Error(`unable get posts: ${err}`);
 	}
 }
 

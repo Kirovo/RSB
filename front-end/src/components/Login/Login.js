@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import axios from '../../axios';
-import TokenContext from '../../contexts/tokenContext';
 import AuthContext from '../../contexts/authContext';
 
 const Login = () => {
@@ -12,7 +11,6 @@ const Login = () => {
     const [keepLogged, setKeepLogged] = useState(false);
 
     const authContext = useContext(AuthContext);
-    const tokenContext = useContext(TokenContext);
 
     const logging = async () => {
         try {
@@ -20,16 +18,14 @@ const Login = () => {
                 email: inputEmail,
                 password: inputPassword
             });
-            const profile = response.data.profile.profile;
-            console.log(profile, 'profile');
+
+            const profileId = response.data.profile.profile.id;
             const token = response.data.token;
 
-            const url = `${profile.id}`;
 
-            console.log(url, 'url');
-
-            authContext.login(keepLogged,url);
-            tokenContext.saveToken(token, keepLogged);
+            console.log('Login profileId', profileId);
+            console.log('Login token', token);
+            authContext.login(keepLogged,profileId,token);
 
             // navigate(`/${url}`);
 

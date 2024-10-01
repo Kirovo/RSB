@@ -38,4 +38,3 @@ class LoginPage:
         self.browser.find_element(By.CSS_SELECTOR, "input[name='address']").send_keys(address)
         self.browser.find_element(By.CSS_SELECTOR, "input[name='city']").send_keys(city)
         self.browser.find_element(By.ID, "submit").click()
-        return {'email': email, 'password': password}

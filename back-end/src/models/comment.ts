@@ -1,8 +1,5 @@
 // Importing client of database to connect to
 import client from '../database';
-import { CRUDModelError } from '../errors/CRUDError';
-import { ActivityAction, CRUDSenario } from "../types/CRUDSenarioType";
-
 
 
 export type Comment = {
