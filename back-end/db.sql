@@ -61,19 +61,19 @@ COPY public.posts (id, id_profile, topic) FROM stdin;
 -- Data for Name: attachments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.attachments (id, id_profile, id_post, path, filename, mime) FROM stdin;
-1	\N	1	images\\cheers.jpg	cheers.jpg	image/jpeg
-2	\N	2	images\\chrome_2x9mRDO0kN.png	chrome_2x9mRDO0kN.png	image/png
-3	\N	3	images\\chrome_wvP1oZHUXi.png	chrome_wvP1oZHUXi.png	image/png
-4	\N	4	images\\445094182_10225062938544677_9085442806088263110_n.jpg	445094182_10225062938544677_9085442806088263110_n.jpg	image/jpeg
-5	\N	5	images\\ESIGELEC.jpg	ESIGELEC.jpg	image/jpeg
-6	\N	6	images\\françois.jpg	françois.jpg	image/jpeg
-7	\N	7	images\\short_term.jpg	short_term.jpg	image/jpeg
-8	\N	8	images\\long_term.jpg	long_term.jpg	image/jpeg
-9	\N	9	images\\CRUD.jpg	CRUD.jpg	image/jpeg
-10	\N	10	images\\work-in-progress.jpg	work-in-progress.jpg	image/jpeg
-11	\N	11	images\\shutterstock_1155881311_FEAT.jpg	shutterstock_1155881311_FEAT.jpg	image/jpeg
-12	\N	12	images\\2d56ede38d6d13ce7b23c7a5b52a7bac.jpg	2d56ede38d6d13ce7b23c7a5b52a7bac.jpg	image/jpeg
+COPY public.attachments (id, id_profile, id_post, path, filename, mime, type) FROM stdin;
+1	\N	1	images\\cheers.jpg	cheers.jpg	image/jpeg	post
+2	\N	2	images\\chrome_2x9mRDO0kN.png	chrome_2x9mRDO0kN.png	image/png	post
+3	\N	3	images\\chrome_wvP1oZHUXi.png	chrome_wvP1oZHUXi.png	image/png	post
+4	\N	4	images\\445094182_10225062938544677_9085442806088263110_n.jpg	445094182_10225062938544677_9085442806088263110_n.jpg	image/jpeg	post
+5	\N	5	images\\ESIGELEC.jpg	ESIGELEC.jpg	image/jpeg	post
+6	\N	6	images\\françois.jpg	françois.jpg	image/jpeg	post
+7	\N	7	images\\short_term.jpg	short_term.jpg	image/jpeg	post
+8	\N	8	images\\long_term.jpg	long_term.jpg	image/jpeg	post
+9	\N	9	images\\CRUD.jpg	CRUD.jpg	image/jpeg	post
+10	\N	10	images\\work-in-progress.jpg	work-in-progress.jpg	image/jpeg	post
+11	\N	11	images\\shutterstock_1155881311_FEAT.jpg	shutterstock_1155881311_FEAT.jpg	image/jpeg	post
+12	\N	12	images\\2d56ede38d6d13ce7b23c7a5b52a7bac.jpg	2d56ede38d6d13ce7b23c7a5b52a7bac.jpg	image/jpeg	post
 \.
 
 

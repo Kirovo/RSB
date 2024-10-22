@@ -10,6 +10,7 @@ export type Attachment = {
 	path? : string;
     filename?: string;
 	mime? : string;
+	type? : string;
 }
 
 
@@ -36,14 +37,14 @@ export class AttachmentStore {
 		}
 	}
 
-	async create(a : Attachment) : Promise<Attachment[]>{
+	async createPostImage(a : Attachment) : Promise<Attachment[]>{
 
 		try {
 
 			const conn = await client.connect();
 				const sql2 =
-					'INSERT INTO attachments (id_post, path, filename, mime) VALUES($1, $2, $3, $4) RETURNING *;'
-				const result = await conn.query(sql2, [a.id_post,a.path,a.filename,a.mime]);
+					'INSERT INTO attachments (id_post, path, filename, mime, type) VALUES ($1, $2, $3, $4, $5) RETURNING *;'
+				const result = await conn.query(sql2, [a.id_post,a.path,a.filename,a.mime,'post']);
 			conn.release();
 
 			return result.rows;
@@ -54,6 +55,95 @@ export class AttachmentStore {
 		}
 	}
 
+	async createProfileImage(a : Attachment) : Promise<Attachment[]>{
+
+		try {
+
+			const conn = await client.connect();
+				const sql2 =
+					'INSERT INTO attachments (id_profile, path, filename, mime, type) VALUES ($1, $2, $3, $4, $5) RETURNING *;'
+				const result = await conn.query(sql2, [a.id_profile,a.path,a.filename,a.mime,'profile']);
+			conn.release();
+
+			return result.rows;
+		} 
+		catch (err) {
+
+			throw new Error(`unable to update profile image: ${err}`);
+		}
+	}
+
+	async createBackgroundImage(a : Attachment) : Promise<Attachment[]>{
+
+		try {
+
+			const conn = await client.connect();
+				const sql2 =
+					'INSERT INTO attachments (id_profile, path, filename, mime, type) VALUES ($1, $2, $3, $4, $5) RETURNING *;'
+				const result = await conn.query(sql2, [a.id_profile,a.path,a.filename,a.mime,'background']);
+			conn.release();
+
+			return result.rows;
+		} 
+		catch (err) {
+
+			throw new Error(`unable to update background image: ${err}`);
+		}
+	}
+
+	async updatePostImage(a : Attachment) : Promise<Attachment[]>{
+
+		try {
+
+			const conn = await client.connect();
+				const sql2 =
+					'UPDATE attachments SET path = $2, filename = $3, mime = $4 WHERE id_post = $1 AND type = $5 RETURNING *;'
+				const result = await conn.query(sql2, [a.id_post,a.path,a.filename,a.mime,'post']);
+			conn.release();
+
+			return result.rows;
+		} 
+		catch (err) {
+
+			throw new Error(`unable to update post image: ${err}`);
+		}
+	}
+	
+	async updateProfileImage(a : Attachment) : Promise<Attachment[]>{
+
+		try {
+			console.log('updateProfileImage');
+			const conn = await client.connect();
+				const sql2 =
+					'UPDATE attachments SET path = $2, filename = $3, mime = $4 WHERE id_profile = $1 AND type = $5 RETURNING *;'
+				const result = await conn.query(sql2, [a.id_profile,a.path,a.filename,a.mime,'profile']);
+			conn.release();
+
+			return result.rows;
+		} 
+		catch (err) {
+
+			throw new Error(`unable to update profile image: ${err}`);
+		}
+	}
+	async updateBackgroundImage(a : Attachment) : Promise<Attachment[]>{
+
+		try {
+
+			const conn = await client.connect();
+				const sql2 =
+					'UPDATE attachments SET path = $2, filename = $3, mime = $4 WHERE id_profile = $1 AND type = $5 RETURNING *;'
+				const result = await conn.query(sql2, [a.id_profile,a.path,a.filename,a.mime,'background']);
+			conn.release();
+
+			return result.rows;
+		} 
+		catch (err) {
+
+			throw new Error(`unable to update background image: ${err}`);
+		}
+	}
+	
 	async remove(a:Attachment) : Promise<Attachment[]> {
 
 		try {
@@ -71,15 +161,49 @@ export class AttachmentStore {
 			throw new Error(`unable get posts: ${err}`);
 		}
 	}
-	async fileReader(id: string | number): Promise<Attachment> {
+	async postImagesReader(id: string | number): Promise<Attachment> {
 		
 		try {
 
 			const conn = await client.connect();
 				const sql =
-					'SELECT * FROM attachments WHERE id_post=$1;';
-				const result = await conn.query(sql,[id]);
+					'SELECT * FROM attachments WHERE id_post=$1 AND type=$2;';
+				const result = await conn.query(sql,[id,'post']);
 			conn.release(result.rows[0]);
+
+			return result.rows[0];
+		}
+		catch (err) {
+			throw new Error(`unable get posts: ${err}`);
+		}
+	}
+	async profileImagesReader(id: string | number): Promise<Attachment> {
+		
+		try {
+			console.log('porfile_id_proflie',id);
+			const conn = await client.connect();
+				const sql =
+					'SELECT * FROM attachments WHERE id_profile=$1 AND type=$2;';
+				const result = await conn.query(sql,[id,'profile']);
+			conn.release(result.rows[0]);
+			console.log('profilerow[0]',result.rows[0]);
+
+			return result.rows[0];
+		}
+		catch (err) {
+			throw new Error(`unable get posts: ${err}`);
+		}
+	}
+	async backgroundImagesReader(id: string | number): Promise<Attachment> {
+		
+		try {
+			console.log('background_id_profile',id);
+			const conn = await client.connect();
+				const sql =
+					'SELECT * FROM attachments WHERE id_profile=$1 AND type=$2;';
+				const result = await conn.query(sql,[id,'background']);
+			conn.release(result.rows[0]);
+			console.log('backgroundrow[0]',result.rows[0]);
 
 			return result.rows[0];
 		}

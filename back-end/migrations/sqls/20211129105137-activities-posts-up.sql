@@ -1,9 +1,12 @@
+DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS reactions;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS attachments;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS profiles;
 DROP TABLE IF EXISTS users;
+DROP TYPE IF EXISTS status;
+DROP SEQUENCE IF EXISTS friends_id_seq;
 DROP SEQUENCE IF EXISTS reactions_id_seq;
 DROP SEQUENCE IF EXISTS comments_id_seq;
 DROP SEQUENCE IF EXISTS attachments_id_seq;
@@ -53,7 +56,8 @@ CREATE TABLE attachments (
     FOREIGN KEY(id_post) REFERENCES posts(id) ON DELETE CASCADE,
     path VARCHAR(255),
     filename VARCHAR(127),
-    mime VARCHAR(15)
+    mime VARCHAR(15),
+    type VARCHAR(15)
     -- date
 );
 

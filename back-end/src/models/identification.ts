@@ -59,12 +59,16 @@ export class IdentificationStore {
 				'INSERT INTO users (email, password_digest) VALUES($1, $2) RETURNING (id)';
 			const sql2 =
 				'INSERT INTO profiles (id_user, firstname, lastname, mobile, birthdate, gendre, address, city, postalcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
+			const sql3 =
+				'INSERT INTO attachments (id_profile, path, filename, mime, type) VALUES($1, $2, $3, $4, $5) RETURNING *';
 			const result1 = await conn.query(sql1, [u.email, hash]);
 			const user = result1.rows[0];
 			const result2 = await conn.query(sql2, [user.id, i.firstname, i.lastname, i.mobile, i.birthdate, i.gendre, i.address, i.city, i.postalcode]);
 			const profile = result2.rows[0];
+			await conn.query(sql3, [profile.id, 'images\\default_profile.jpg', 'default_profile.jpg', 'image/jpeg', 'profile']);
+			await conn.query(sql3, [profile.id, 'images\\default_background.jpg', 'default_background.jpg', 'image/jpeg', 'background']);
 			conn.release();
-			return profile;
+			return [user, profile];
 		} catch (err) {
 			throw new Error(`unable create post: ${err}`);
 		}

@@ -13,3 +13,4 @@ def test_successful_login(chrome_browser):
 def test_create_post(browser):
     profile_page = ProfilePage(browser)
     profile_page.create_post()
+

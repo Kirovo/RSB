@@ -40,7 +40,7 @@ function Modal(){
             formData.append('file',file)
             formData.append('id_post', newPost.data.id )
 
-            await axios.post('http://localhost:2000/attachment', formData,            
+            await axios.post('http://localhost:2000/attachment/post', formData,            
                 {   
                     headers: {
                         'Content-type': 'multipart/form-data',
@@ -79,7 +79,7 @@ function Modal(){
                                     <div className='sender-profile'></div>
                                     <button onClick={ctxmo.closeModal} className='close-button' type="button">&#x2715;</button>
                                 </div>
-                                <form onSubmit={cSend} action="http://localhost:2000/post" method="POST" encType="multipart/form-data">
+                                <form onSubmit={cSend}>
                                     <div>
                                         <label>Your topic</label>
                                         <input ref={inputRef} id='topic'  name='topic' value={topic} onChange={e=> setTopic(e.target.value)} />

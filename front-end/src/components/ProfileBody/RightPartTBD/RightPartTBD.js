@@ -148,13 +148,14 @@ function MissionsQuicky(props) {
         <div className={styles.body}>
             <div className={styles.blockinfo}>MissionsQuicky</div>
             <div className='in-progress-body'>
-                <div className='in-progress-container'>
+                <div className={styles.in_progress_container}>
                     {friendsRequest ? (
                         friendsRequest.map((friend, index) => (
                             <div
                                 key={index}
                                 className={styles.profileItem}>
-                                <span onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
+                                <img className={styles.profile} onClick={() => handleProfileClick(friend.id)} src={'http://localhost:2000/attachment/profile/' + friend.id} alt="profileImage"></img>
+                                <span className={styles.name} onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
                                 <button onClick={() => handleFriendAccept(props.profile.id, friend.id)} className={styles.addButton}>Accept</button>
                                 <button onClick={() => handleRemoveFriend(props.profile.id, friend.id)} className={styles.removeButton}>Refuse</button>
 
@@ -164,13 +165,14 @@ function MissionsQuicky(props) {
                         <div>No friends</div>
                     )}
                 </div>
-                <div className='in-progress-container'>
+                <div className={styles.in_progress_container}>
                     {friendsList ? (
                         friendsList.map((friend, index) => (
                             <div
                                 key={index}
                                 className={styles.profileItem}>
-                                <span onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
+                                <img className={styles.profile} onClick={() => handleProfileClick(friend.id)} src={'http://localhost:2000/attachment/profile/' + friend.id} alt="profileImage"></img>
+                                <span className={styles.name} onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
                                 <button onClick={() => handleRemoveFriend(props.profile.id, friend.id)} className={styles.removeButton}>Remove</button>
                             </div>
                         ))
@@ -178,13 +180,14 @@ function MissionsQuicky(props) {
                         <div>No friends</div>
                     )}
                 </div>
-                <div className='in-progress-container'>
+                <div className={styles.in_progress_container}>
                     {pendingRequest ? (
                         pendingRequest.map((friend, index) => (
                             <div
                                 key={index}
                                 className={styles.profileItem}>
-                                <span onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
+                                <img className={styles.profile} onClick={() => handleProfileClick(friend.id)} src={'http://localhost:2000/attachment/profile/' + friend.id} alt="profileImage"></img>
+                                <span className={styles.name} onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
                                 <button onClick={() => handleRemoveFriend(props.profile.id, friend.id)} className={styles.cancelButton}>Cancel Friend Request</button>
 
                             </div>
@@ -193,13 +196,14 @@ function MissionsQuicky(props) {
                         <div>No friends</div>
                     )}
                 </div>
-                <div className='in-progress-container'>
+                <div className={styles.in_progress_container}>
                     {suggestedProfiles ? (
                         suggestedProfiles.map((friend, index) => (
                             <div
                                 key={index}
                                 className={styles.profileItem}>
-                                <span onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
+                                <img className={styles.profile} onClick={() => handleProfileClick(friend.id)} src={'http://localhost:2000/attachment/profile/' + friend.id} alt="profileImage"></img>
+                                <span className={styles.name} onClick={() => handleProfileClick(friend.id)} style={{ cursor: 'pointer' }}>{friend.firstname} {friend.lastname}</span>
                                 <button onClick={() => handleAddFriend(props.profile.id, friend.id)} className={styles.addButton}>Add</button>
                             </div>
                         ))

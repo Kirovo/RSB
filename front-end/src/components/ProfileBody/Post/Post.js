@@ -77,10 +77,10 @@ function Post(props) {
                 <button className='close-button' data-id_post={props.post.id} onClick={deletePost}>&#x2715;</button>
             </div>
             <h2 className='topic'>{props.post.topic}</h2>
-            <img className='post' src={'http://localhost:2000/attachment/' + props.post.id} alt={props.post.path} />
+            <img className='post' src={'http://localhost:2000/attachment/post/' + props.post.id} alt={props.post.path} />
             {/* To resetup on back-end & refactor to consider all doc types see ref i navigator favorites*/}
             <div className='reaction'>
-                <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>
+                <button id_post={props.post.id} onClick={reacting}>Like &#128077;</button>  
                 <div className='reaction-number-box'>
                     {props.reactions ? (
                         (props.reactions.filter(reaction => reaction.id_post === props.post.id).length !== 0) ? (

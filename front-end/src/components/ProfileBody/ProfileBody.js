@@ -32,60 +32,61 @@ function ProfileBody() {
     const [profile, setProfile] = useState([])
 
     const indexElements = useCallback(async () => {
-        try{
-        console.log('token', ctxau.token)
-        const profile = await Show('profile', profileid, ctxau.token);
-        const post = profile[0].post;
-        console.log('profile', profile)
-        setPosts(post);
-        setProfile(profile[0]);
+        try {
+            console.log('token', ctxau.token)
+            const profile = await Show('profile', profileid, ctxau.token);
+            const post = profile[0].post;
+            console.log('profile', profile)
+            setPosts(post);
+            setProfile(profile[0]);
         }
-        catch(error){
+        catch (error) {
             setError(true)
         }
     }, [ctxau.token, profileid]);
 
     useEffect(() => {
         indexElements();
-    }, [indexElements,ctxre.refresh]);
+    }, [indexElements, ctxre.refresh]);
 
-    if (!error){
-    return (
-        <ModalContext.Provider value={{
-            modal: modal,
-            closeModal: () => { setModal(undefined) },
-            createPostModal: () => { setModal('createPost') }
-        }}>
-            <div className="view1">
-                {console.log('ProfileBody')}
-                {modal ? (<Modal />) : (<></>)}
-                <Header />
+    if (!error) {
+        return (
+            <ModalContext.Provider value={{
+                modal: modal,
+                closeModal: () => { setModal(undefined) },
+                createPostModal: () => { setModal('createPost') }
+            }}>
+                <div className="view1">
+                    {console.log('ProfileBody')}
+                    {modal ? (<Modal />) : (<></>)}
+                    <Header />
 
-                <div className='body1'>
-                    <LeftPartTBD />
-                    <div className="center" id="scrollbar1">
-                        <ProfileInfo profile={profile} /> {/* username={username} userId={userId} Pass the username and userId */}
-                        <div className='cPost border-radius border-shadow'>
-                            <div className='newpost-container'>
-                                <button id='create-post' className='newpost-button' onClick={() => { setModal('createPost') }} type="button">New Post</button>
+                    <div className='body1'>
+                        <LeftPartTBD />
+                        <div className="center" id="scrollbar1">
+                            <ProfileInfo profile={profile} /> {/* username={username} userId={userId} Pass the username and userId */}
+                            <div className='cPost border-radius border-shadow'>
+                                <div className='newpost-container'>
+                                    <button id='create-post' className='newpost-button' onClick={() => { setModal('createPost') }} type="button">New Post</button>
+                                </div>
+                                <WorkInProgress />
                             </div>
-                            <WorkInProgress />
-                        </div>
-                        {posts ? (
-                            posts.map((post, index) => (
-                                <Post key={index} token={ctxau.token} post={post} comments={post.comment} reactions={post.reaction} />
-                            ))
-                        ) : (
-                            <>No posts</>
+                            {posts ? (
+                                posts.map((post, index) => (
+                                    <Post key={index} token={ctxau.token} post={post} comments={post.comment} reactions={post.reaction} />
+                                ))
+                            ) : (
+                                <>No posts</>
 
-                        )}
+                            )}
+                        </div>
+                        {console.log('profile', profile)}
+                        <RightPartTBD profile={profile} />
                     </div>
-                    {console.log('profile', profile)}
-                    <RightPartTBD profile={profile} />
                 </div>
-            </div>
-        </ModalContext.Provider>    
-    )}
+            </ModalContext.Provider>
+        )
+    }
     else {
         return <></>
     }
